@@ -4,8 +4,8 @@ __name__= "cleaning"
 from .capitalizationcleaner import CapitalizationCleaner
 from .characterencodingcleaner import CharacterEncodingCleaner
 from .cleaner import Cleaner
-from .cleaningprocess import CleaningProcess
-from .cleaningprocessfactory import CleaningProcessFactory
+from .cleaningtask import CleaningTask
+from .cleaningtaskfactory import CleaningTaskFactory
 from .diacriticcleaner import DiacriticCleaner 
 from .emoticoncleaner import EmoticonCleaner
 from .hashtagcleaner import HashtagClener

@@ -13,5 +13,5 @@ class HtmlCleaner(Cleaner):
         return utils.decode_htmlentities(text)
 
     def __remove_htmltags(self, text):
-        htlmprocesor = BeautifulSoup(text)
+        htlmprocesor = BeautifulSoup(text, features="html.parser")
         return htlmprocesor.get_text()

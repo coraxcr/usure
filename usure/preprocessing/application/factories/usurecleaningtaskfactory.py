@@ -1,18 +1,17 @@
 from typing import List
 from usure.preprocessing.cleaning import (
-    CleaningProcess,
-    CleaningProcessFactory,
+    CleaningTask,
+    CleaningTaskFactory,
 )
-from .cleaningprocessbuilder import CleaningProcessBuilder
+from .cleaningtaskbuilder import CleaningTaskBuilder
 
 
-
-class CleaningFactory(CleaningProcessFactory):
+class UsureCleaningTaskFactory(CleaningTaskFactory):
 
     def __init__(self):
-        self._builder = CleaningProcessBuilder()
+        self._builder = CleaningTaskBuilder()
 
-    def create_basic_process(self) -> CleaningProcess:
+    def create_basic_process(self) -> CleaningTask:
         cleaners = (self._builder
         .add_htmlcleaning()
         .add_urlcleaning()
@@ -26,7 +25,7 @@ class CleaningFactory(CleaningProcessFactory):
         .add_puntuationcleaning()
         .add_encodingcleaning()
         .build())
-        return CleaningProcess(cleaners)
+        return CleaningTask(cleaners)
 
         
         

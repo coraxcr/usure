@@ -16,7 +16,7 @@ from usure.preprocessing.cleaning import (
 from typing import List
 from usure.preprocessing.infrastructure import EmoticonRepository, StopwordsRepository 
 
-class CleaningProcessBuilder:
+class CleaningTaskBuilder:
 
     def __init__(self):
         self._cleaners  = []

@@ -16,7 +16,9 @@
             "name": "Python: Module",
             "type": "python",
             "request": "launch",
-            "module": "${file}"
+            "module": "usure.preprocessing.application.etl",
+            "cwd": "${workspaceFolder}",
+            "args": []        
         }
     ]
 }

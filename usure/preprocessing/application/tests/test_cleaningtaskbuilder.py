@@ -1,9 +1,9 @@
 import pytest
-from usure.preprocessing.application.factories.cleaningprocessbuilder import CleaningProcessBuilder
+from usure.preprocessing.application.factories.cleaningtaskbuilder import CleaningTaskBuilder
 from usure.preprocessing.cleaning import (DiacriticCleaner, EmoticonCleaner, HashtagClener)
 
 def contains_three_cleaners_test():
-    builder = CleaningProcessBuilder()
+    builder = CleaningTaskBuilder()
     cleaners = (builder
         .add_diacriticcleaning()
         .add_emoticoncleaning()
@@ -13,7 +13,7 @@ def contains_three_cleaners_test():
 
 
 def contains_correct_cleaners_test():
-    builder = CleaningProcessBuilder()
+    builder = CleaningTaskBuilder()
     cleaners = (builder
         .add_diacriticcleaning()
         .add_emoticoncleaning()
