@@ -6,6 +6,8 @@ class EmoticonCleaner(Cleaner):
 
     def __init__(self, emoticonrepository):
         self.__emoticonrepository = emoticonrepository
+        self.positiveemoticons = self.__emoticonrepository.get_positive_emoticons()
+        self.negativeemoticons = self.__emoticonrepository.get_negative_emoticons()
 
     def clean(self, text: str) -> str:
         tokens = text.split(' ') 
@@ -14,11 +16,10 @@ class EmoticonCleaner(Cleaner):
 
     
     def __substitute_by_placeholder(self, token):
-        positiveemoticons = self.__emoticonrepository.get_positive_emoticons()
-        negativeemoticons = self.__emoticonrepository.get_negative_emoticons()
-        if token in positiveemoticons:
+
+        if token in self.positiveemoticons:
             return "positive_emoticon"
-        elif token in negativeemoticons:
+        elif token in self.negativeemoticons:
             return "negative_emoticon"
         else: 
             return token

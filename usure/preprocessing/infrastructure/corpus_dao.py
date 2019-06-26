@@ -5,6 +5,7 @@ from pandas import DataFrame
 import pandas as pd
 #from typing import Callable
 #is_even: Callable[[int], bool] = lambda x: (x % 2 == 0)
+#sep=os.linesep
 
 class CorpusDAO():
 
@@ -16,14 +17,19 @@ class CorpusDAO():
     def _get_absolute_path(self, filename:str) -> str:
         return os.path.join(self._location__, filename)        
 
-    def get_facebookcorpus(self) -> DataFrame:
-        path = self._get_absolute_path(f"{self._basepath}CorpusFBCR2013.txt")
-        result = pd.read_csv(path, sep=os.linesep, encoding="latin_1")
+    def _get_corpus(self, filename:str) -> DataFrame:
+        path = self._get_absolute_path(f"{self._basepath}{filename}")
+        result = pd.read_csv(path, sep=os.linesep, encoding="latin_1", header=None)
         return result
 
-    def store_facebookcorpus(self, data):
-        data.to_csv(self._get_absolute_path(f"{self._basepath}CorpusFBCR2013.usu"))
-    
-    def get_twittercorpus(self) -> DataFrame:
-        raise NotImplementedError()
+    def _store_corpus(self, filename:str, corpus):
+        path = self._get_absolute_path(f"{self._basepath}{filename}.usu")
+        corpus.to_csv(path, encoding="ascii", index=False, header=False)
 
+    @abstractmethod
+    def get_corpus(self):
+        raise NotImplementedError
+    
+    @abstractmethod
+    def store_corpus(self, corpus):
+        raise NotImplementedError

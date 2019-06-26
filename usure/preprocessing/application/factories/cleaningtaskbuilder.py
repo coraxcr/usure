@@ -11,7 +11,10 @@ from usure.preprocessing.cleaning import (
     PuntuationCleaner,
     StopWordsCleaner,
     UrlCleaner,
-    WordLengtheningCleaner
+    WordLengtheningCleaner,
+    EmptyCleaner,
+    TwitterCorpusCleaner,
+    NumericCleaner
 )
 from typing import List
 from usure.preprocessing.infrastructure import EmoticonRepository, StopwordsRepository 
@@ -86,5 +89,20 @@ class CleaningTaskBuilder:
 
     def add_wordlengtheningcleaning(self):
         cleaner = WordLengtheningCleaner()
+        self._add_cleaner(cleaner)
+        return self
+
+    def add_emptycleaner(self):
+        cleaner = EmptyCleaner()
+        self._add_cleaner(cleaner)
+        return self
+
+    def add_twittercorpuscleaner(self):
+        cleaner = TwitterCorpusCleaner()
+        self._add_cleaner(cleaner)
+        return self
+
+    def add_numericcleaner(self):
+        cleaner = NumericCleaner()
         self._add_cleaner(cleaner)
         return self

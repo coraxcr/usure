@@ -9,6 +9,6 @@ class WordLengtheningCleaner(Cleaner):
         self.__pattern_sillable = re.compile(r"(\w{2})\1{2,}")#more than 2 syllable
 
     def clean(self, text: str) -> str:
-        #cleaned_text = self.__pattern_sillable.sub(r"\1\1", text)
-        cleaned_text = self.__pattern_letter.sub(r"\1\1", text)
+        cleaned_text = self.__pattern_sillable.sub(r"\1\1", text)
+        cleaned_text = self.__pattern_letter.sub(r"\1\1", cleaned_text)
         return cleaned_text

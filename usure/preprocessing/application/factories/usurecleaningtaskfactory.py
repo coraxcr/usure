@@ -13,6 +13,25 @@ class UsureCleaningTaskFactory(CleaningTaskFactory):
 
     def create_basic_process(self) -> CleaningTask:
         cleaners = (self._builder
+        #.add_emptycleaner()
+        .add_htmlcleaning()
+        .add_urlcleaning()
+        .add_mentioncleaning()
+        .add_hashtagcleaning()
+        .add_emoticoncleaning()
+        .add_captalizationcleaning()
+        .add_wordlengtheningcleaning()
+        .add_stopwordscleaning()
+        .add_diacriticcleaning()
+        .add_puntuationcleaning()
+        .add_encodingcleaning()
+        .build())
+        return CleaningTask(cleaners)
+
+    def create_twitter_process(self) -> CleaningTask:
+        cleaners = (self._builder
+        #.add_emptycleaner()
+        .add_twittercorpuscleaner()
         .add_htmlcleaning()
         .add_urlcleaning()
         .add_mentioncleaning()
