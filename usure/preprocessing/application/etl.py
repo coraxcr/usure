@@ -24,16 +24,21 @@ class ETL:
         self.line_number = 0
 
     def _extract(self):
-        df = self._corpus_dao.get_corpus()
+        df = self._corpus_dao.get_corpus_by_chunks()
         return df
 
-    def _transform(self, df:DataFrame) -> DataFrame:  
-        df.dropna(inplace=True)
-        commentslist = df.iterrows()  
-        #counter = Value(c_int, 0, lock=True)
+    def _transform(self, reader) -> DataFrame:  
+        processedcomments = []
         with Pool(processes=8) as p:
-            commentslist = p.map(self._map_to_each_line, commentslist, chunksize=100)
-        df = DataFrame(commentslist)
+            counter = 0
+            for chunk in reader:
+                logging.info(f"Chunk: {counter} Starting time:{time.strftime('%H:%M:%S', time.localtime(time.time()))}")
+                chunk.dropna(inplace=True)
+                commentslist = chunk.iterrows()
+                processedcomments.extend(p.map(self._map_to_each_line, commentslist))
+                counter += 1
+
+        df = DataFrame(processedcomments)
         df.replace("", np.nan, inplace=True)
         df.dropna(inplace=True)
         return df
@@ -43,11 +48,6 @@ class ETL:
 
     def _map_to_each_line(self,row):
         text = row[1][0]   
-        #if math.fmod(self.line_number, 2) == 0:
-        #    logging.info(f"Processed lines: {self.line_number} time: {time.strftime('%H:%M:%S', time.gmtime(time.process_time() - self._t))}") 
-        #self.line_number += 1
-        ##with counter.get_lock():
-        ##    counter.value += 1
         try:
             result = self._cleaningtask.clean(text)
         except:
@@ -73,6 +73,6 @@ class ETL:
 if __name__ == "__main__":
     cleaningtaskfactory = UsureCleaningTaskFactory()
     cleaningtask = cleaningtaskfactory.create_twitter_process()
-    corpusdao = TwitterCorpusDAO()
+    corpusdao = TestCorpusDAO()
     etl = ETL(cleaningtask, corpusdao)
     etl.do()

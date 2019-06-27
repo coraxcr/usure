@@ -18,3 +18,4 @@ from .wordlengtheningcleaner import WordLengtheningCleaner
 from .emptycleaner import EmptyCleaner
 from .twittercorpuscleaner import TwitterCorpusCleaner
 from .numericcleaner import NumericCleaner
+from .escapecleaner import EscapeCleaner

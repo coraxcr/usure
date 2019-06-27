@@ -6,4 +6,4 @@ class Cleaner:
 
     @abstractmethod
     def clean(self, text: str) -> str:
-        pass
+        raise NotImplementedError

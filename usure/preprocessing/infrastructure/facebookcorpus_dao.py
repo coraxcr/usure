@@ -8,4 +8,7 @@ class FacebookCorpusDAO(CorpusDAO):
 
     def store_corpus(self, data):
         self._store_corpus("CorpusFBCR2013", data)
+
+    def get_corpus_by_chunks(self):
+        return self._get_corpus_by_chunks("CorpusFBCR2013.txt")
     

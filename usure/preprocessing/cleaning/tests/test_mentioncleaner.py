@@ -7,3 +7,11 @@ def can_rid_mentions_off_test():
     cleaner = MentionCleaner()
     result = cleaner.clean(text)
     assert result == cleaned_text
+
+
+def can_rid_mentions_off_2_test():
+    text =  "\"@TeolindaPolo: quiero pla"
+    cleaned_text = ": quiero pla"
+    cleaner = MentionCleaner()
+    result = cleaner.clean(text)
+    assert result == cleaned_text

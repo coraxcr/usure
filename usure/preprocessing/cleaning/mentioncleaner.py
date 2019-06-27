@@ -4,7 +4,7 @@ import re
 class MentionCleaner(Cleaner):
 
     def __init__(self):
-        self.__pattern = re.compile("((\s+@)|(^@))\w+")
+        self.__pattern = re.compile("(([^\w]@)|(\s+@)|(^@))\w+")
 
     def clean(self, text):
         cleaned_text =  self.__pattern.sub("", text)

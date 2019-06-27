@@ -18,9 +18,9 @@ class EmoticonCleaner(Cleaner):
     def __substitute_by_placeholder(self, token):
 
         if token in self.positiveemoticons:
-            return "positive_emoticon"
+            return "positiveemoticon"
         elif token in self.negativeemoticons:
-            return "negative_emoticon"
+            return "negativeemoticon"
         else: 
             return token
 

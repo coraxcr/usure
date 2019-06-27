@@ -14,7 +14,8 @@ from usure.preprocessing.cleaning import (
     WordLengtheningCleaner,
     EmptyCleaner,
     TwitterCorpusCleaner,
-    NumericCleaner
+    NumericCleaner,
+    EscapeCleaner
 )
 from typing import List
 from usure.preprocessing.infrastructure import EmoticonRepository, StopwordsRepository 
@@ -104,5 +105,10 @@ class CleaningTaskBuilder:
 
     def add_numericcleaner(self):
         cleaner = NumericCleaner()
+        self._add_cleaner(cleaner)
+        return self
+
+    def add_escapecleaner(self):
+        cleaner = EscapeCleaner()
         self._add_cleaner(cleaner)
         return self

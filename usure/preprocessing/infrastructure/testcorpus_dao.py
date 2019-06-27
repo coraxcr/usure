@@ -8,3 +8,6 @@ class TestCorpusDAO(CorpusDAO):
 
     def store_corpus(self, data):
         self._store_corpus("test", data)    
+
+    def get_corpus_by_chunks(self) -> DataFrame:
+        return self._get_corpus_by_chunks("test.txt")

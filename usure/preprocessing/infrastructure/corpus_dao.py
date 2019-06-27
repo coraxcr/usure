@@ -19,8 +19,13 @@ class CorpusDAO():
 
     def _get_corpus(self, filename:str) -> DataFrame:
         path = self._get_absolute_path(f"{self._basepath}{filename}")
-        result = pd.read_csv(path, sep=os.linesep, encoding="latin_1", header=None)
+        result = pd.read_csv(path, sep=os.linesep, encoding="utf_8", header=None)
         return result
+    
+    def _get_corpus_by_chunks(self, filename:str) -> DataFrame:
+        path = self._get_absolute_path(f"{self._basepath}{filename}")
+        reader = pd.read_csv(path, sep=os.linesep, encoding="utf_8", header=None, chunksize=400000)
+        return reader
 
     def _store_corpus(self, filename:str, corpus):
         path = self._get_absolute_path(f"{self._basepath}{filename}.usu")
@@ -28,6 +33,10 @@ class CorpusDAO():
 
     @abstractmethod
     def get_corpus(self):
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_corpus_by_chunks(self):
         raise NotImplementedError
     
     @abstractmethod
