@@ -51,7 +51,7 @@ class ETL:
         try:
             result = self._cleaningtask.clean(text)
         except:
-            print(f"AQUI=======> {text}linea:{self.line_number}")
+            print(f"Error: {text}line:{self.line_number}")
             raise
         return result
 
