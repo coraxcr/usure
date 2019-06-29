@@ -32,12 +32,12 @@ class ETL:
 
     @property
     def corpusdao(self):
-        return self._cleaningtask
+        return self._corpusdao
     
     @corpusdao.setter
     def corpusdao(self, value):
         assert isinstance(value, CorpusDAO), "Not a CorpusDAO task"
-        self._cleaningtask = value
+        self._corpusdao = value
 
     def _extract(self):
         df = self._corpusdao.get_corpus_by_chunks()
