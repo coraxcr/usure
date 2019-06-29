@@ -9,22 +9,38 @@ from multiprocessing import Pool, Value
 from ctypes import c_int
 
 from usure.preprocessing.cleaning import CleaningTask
-from usure.preprocessing.application.factories.usurecleaningtaskfactory import UsureCleaningTaskFactory 
-from usure.preprocessing.infrastructure import CorpusDAO, TwitterCorpusDAO, FacebookCorpusDAO, TestCorpusDAO
+from usure.preprocessing.application.factories import UsureCleaningTaskFactory, CorpusDAOFactory
+from usure.preprocessing.infrastructure import CorpusDAO
 
 
 class ETL:
 
-    def __init__(self, cleaningtask:CleaningTask, corpus_dao:CorpusDAO):
+    def __init__(self, cleaningtask:CleaningTask, corpusdao:CorpusDAO):
         logging.basicConfig(level=logging.INFO)
         warnings.filterwarnings("ignore", category=UserWarning, module='bs4')
         self._cleaningtask = cleaningtask
-        self._corpus_dao = corpus_dao
-        self._t = 0
-        self.line_number = 0
+        self._corpusdao = corpusdao
+
+    @property
+    def cleaningtask(self):
+        return self._cleaningtask
+    
+    @cleaningtask.setter
+    def cleaningtask(self, value):
+        assert isinstance(value, CleaningTask), "Not a Cleaning task"
+        self._cleaningtask = value
+
+    @property
+    def corpusdao(self):
+        return self._cleaningtask
+    
+    @corpusdao.setter
+    def corpusdao(self, value):
+        assert isinstance(value, CorpusDAO), "Not a CorpusDAO task"
+        self._cleaningtask = value
 
     def _extract(self):
-        df = self._corpus_dao.get_corpus_by_chunks()
+        df = self._corpusdao.get_corpus_by_chunks()
         return df
 
     def _transform(self, reader) -> DataFrame:  
@@ -44,14 +60,14 @@ class ETL:
         return df
 
     def _load(self, df:DataFrame):
-        self._corpus_dao.store_corpus(df)
+        self._corpusdao.store_corpus(df)
 
     def _map_to_each_line(self,row):
         text = row[1][0]   
         try:
             result = self._cleaningtask.clean(text)
         except:
-            print(f"Error: {text}line:{self.line_number}")
+            print(f"Error text of the line: \"{text}\"")
             raise
         return result
 
@@ -71,8 +87,13 @@ class ETL:
 
 
 if __name__ == "__main__":
+
     cleaningtaskfactory = UsureCleaningTaskFactory()
-    cleaningtask = cleaningtaskfactory.create_twitter_process()
-    corpusdao = TestCorpusDAO()
+    corpusdaofactory = CorpusDAOFactory()
+
+    cleaningtask = cleaningtaskfactory.create_basic_process()
+    corpusdao = corpusdaofactory.create_facebook()
+
     etl = ETL(cleaningtask, corpusdao)
-    etl.do()
+
+    etl.do() 

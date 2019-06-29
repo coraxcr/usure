@@ -3,9 +3,6 @@ from abc import ABC, abstractmethod
 from typing import List, Callable
 from pandas import DataFrame
 import pandas as pd
-#from typing import Callable
-#is_even: Callable[[int], bool] = lambda x: (x % 2 == 0)
-#sep=os.linesep
 
 class CorpusDAO():
 
@@ -24,7 +21,8 @@ class CorpusDAO():
     
     def _get_corpus_by_chunks(self, filename:str) -> DataFrame:
         path = self._get_absolute_path(f"{self._basepath}{filename}")
-        reader = pd.read_csv(path, sep=os.linesep, encoding="utf_8", header=None, chunksize=400000)
+        input_fd = open(path, encoding="utf_8", errors = 'backslashreplace')
+        reader = pd.read_csv(input_fd, sep=os.linesep, header=None, chunksize=400000)
         return reader
 
     def _store_corpus(self, filename:str, corpus):
