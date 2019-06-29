@@ -71,11 +71,11 @@ class ETL:
             raise
         return result
 
-    def _log_time(self, function, name):
+    def _log_time(self, task, name):
         logging.info(f"Start {name} Starting time:{time.strftime('%H:%M:%S', time.localtime(time.time()))}")
-        self._t = time.process_time()
-        result = function()
-        elapsed_time = time.process_time() - self._t
+        start_process_time = time.process_time()
+        result = task()
+        elapsed_time = time.process_time() - start_process_time
         logging.info(f"End {name}: {time.strftime('%H:%M:%S', time.gmtime(elapsed_time))}")
         return result
 
