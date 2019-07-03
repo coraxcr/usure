@@ -1,4 +1,4 @@
-from .corpus_dao import CorpusDAO
+from .corpus_dao import CorpusDAO, abstractmethod
 from pandas import DataFrame
 
 class FacebookCorpusDAO(CorpusDAO):

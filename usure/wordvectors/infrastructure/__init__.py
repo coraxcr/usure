@@ -1,0 +1,4 @@
+from .trainingcorpusdao import TrainingCorpusDAO
+from .fbtrainingcorpusdao import FbTrainingCorpusDAO
+from .twittertrainingcorpusdao import TwitterTrainingCorpusDAO
+from .testtrainingcorpusdao import TestTrainingCorpusDAO
