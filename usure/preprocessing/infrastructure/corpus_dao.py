@@ -26,7 +26,7 @@ class CorpusDAO():
         return reader
 
     def _store_corpus(self, filename:str, corpus):
-        path = self._get_absolute_path(f"{self._basepath}{filename}.usu")
+        path = self._get_absolute_path(f"preprocessed/{self._basepath}{filename}.usu")
         corpus.to_csv(path, encoding="ascii", index=False, header=False)
 
     @abstractmethod

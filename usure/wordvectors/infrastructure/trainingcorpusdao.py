@@ -1,12 +1,13 @@
 import os
+from io import TextIOWrapper
 from abc import ABC, abstractmethod
-from gensim.utils import tokenize
+#from gensim.utils import tokenize
 
 
 class TrainingCorpusDAO(ABC):
 
     def __init__(self):
-        self._basepath = "/assets/corpora/"
+        self._basepath = "/assets/corpora/preprocessed"
         self._location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
     def _get_absolute_path(self, filename:str) -> str:
@@ -14,12 +15,20 @@ class TrainingCorpusDAO(ABC):
 
     def _get_trainingcorpus(self, filename):
         path = self._get_absolute_path(filename) 
-        with open(path, encoding="ascii") as file:
-            line = file.readline()
-            while line:
-                yield tokenize(line, lower=True, errors='ignore')
-                line = file.readline()
+        return TrainingCorpus(path)
 
     @abstractmethod
     def get_trainingcorpus(self):
         raise NotImplementedError()
+
+class TrainingCorpus:
+
+    def __init__(self, path:str):
+        self._path = path
+
+    def __iter__(self):
+        with open(self._path, encoding="ascii") as file:
+            line = file.readline()
+            while line:
+                yield line.split()
+                line = file.readline()
