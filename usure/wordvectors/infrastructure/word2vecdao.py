@@ -1,20 +1,17 @@
 import os
-from abc import ABC, abstractmethod
 from gensim.models import Word2Vec 
-  
+from usure.wordvectors.vectorizer import Vectorizer
 
-class Word2VecDAO(ABC):
+class Word2VecDAO:
 
     def __init__(self):
-        self._basepath = "/assets/corpora/embeddings"
+        self._basepath = "assets/corpora/embeddings"
         self._location = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-        self._fullfilepath = None
 
     def _get_absolute_path(self, filename:str) -> str:
-        return os.path.join(self._location+self._basepath, filename) 
+        return os.path.join(self._location, self._basepath, filename) 
     
-    def save_model(self, w2v: Word2Vec):
-        w2v.save(self._fullfilepath)
-
-    def get_model(self, w2v: Word2Vec):
-        return Word2Vec.load(self._fullfilepath)
+    def save_model(self, vectorizer:Vectorizer):
+        name=f"{vectorizer.sentences.name}.{vectorizer.name}.w2v"
+        path=self._get_absolute_path(name)
+        vectorizer.w2v.save(path)

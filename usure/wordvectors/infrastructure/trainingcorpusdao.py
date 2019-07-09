@@ -1,33 +1,48 @@
 import os
+import re
+from os import path
+from pathlib import Path
 from io import TextIOWrapper
-from abc import ABC, abstractmethod
-#from gensim.utils import tokenize
 
 
-class TrainingCorpusDAO(ABC):
+class TrainingCorpusDAO:
 
     def __init__(self):
-        self._basepath = "/assets/corpora/preprocessed"
-        self._location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+        self._basepath = "assets/corpora/preprocessed/"
+        self._location = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
-    def _get_absolute_path(self, filename:str) -> str:
-        return os.path.join(self._location__+self._basepath, filename) 
+    def get_trainingcorpora(self):
+        dirfullpath = path.join(self._location, self._basepath)
+        return FileTrainingCorpora(dirfullpath)
 
-    def _get_trainingcorpus(self, filename):
-        path = self._get_absolute_path(filename) 
-        return TrainingCorpus(path)
 
-    @abstractmethod
-    def get_trainingcorpus(self):
-        raise NotImplementedError()
+class FileTrainingCorpora:
 
-class TrainingCorpus:
-
-    def __init__(self, path:str):
-        self._path = path
+    def __init__(self, folderpath): 
+        self._folderpath = folderpath
+        self._ignoreconvention = re.compile(".+\.ignore$")
 
     def __iter__(self):
-        with open(self._path, encoding="ascii") as file:
+        dirnames = os.listdir(self._folderpath)
+        filenames = [dirname for dirname in dirnames if path.isfile(path.join(self._folderpath, dirname))]
+        filenames = [filename for filename in filenames if not self._ignoreconvention.match(filename)]
+        filenames.sort(key = lambda filename: path.getsize(path.join(self._folderpath, filename)))
+        for filename in filenames:
+            yield FileTrainingCorpus(Path(filename).stem, path.join(self._folderpath, filename))
+
+
+class FileTrainingCorpus:
+
+    def __init__(self, name:str, filepath:str):
+        self._name = name
+        self._filepath = filepath
+
+    @property
+    def name(self):
+        return self._name
+
+    def __iter__(self):
+        with open(self._filepath, encoding="ascii") as file:
             line = file.readline()
             while line:
                 yield line.split()
