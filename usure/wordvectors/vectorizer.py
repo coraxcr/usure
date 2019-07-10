@@ -4,6 +4,7 @@ from gensim.models import Word2Vec
 from usure.wordvectors.infrastructure import TrainingCorpusDAO, TrainingCorpus
 import multiprocessing
 
+
 def logtime(function_to_decorate):
     def decore_logtime(vectorizer):
         logging.info(f"Starting time:{time.strftime('%H:%M:%S', time.localtime(time.time()))}")
