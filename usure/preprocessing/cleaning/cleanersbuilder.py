@@ -1,3 +1,4 @@
+from typing import List
 from usure.preprocessing.cleaning import (
     CapitalizationCleaner, 
     CharacterEncodingCleaner,
@@ -12,15 +13,13 @@ from usure.preprocessing.cleaning import (
     StopWordsCleaner,
     UrlCleaner,
     WordLengtheningCleaner,
-    EmptyCleaner,
     TwitterCorpusCleaner,
     NumericCleaner,
     EscapeCleaner
 )
-from typing import List
 from usure.preprocessing.infrastructure import EmoticonRepository, StopwordsRepository 
 
-class CleaningTaskBuilder:
+class CleanersBuilder:
 
     def __init__(self):
         self._cleaners  = []
@@ -90,11 +89,6 @@ class CleaningTaskBuilder:
 
     def add_wordlengtheningcleaning(self):
         cleaner = WordLengtheningCleaner()
-        self._add_cleaner(cleaner)
-        return self
-
-    def add_emptycleaner(self):
-        cleaner = EmptyCleaner()
         self._add_cleaner(cleaner)
         return self
 

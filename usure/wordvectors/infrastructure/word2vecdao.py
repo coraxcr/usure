@@ -3,7 +3,7 @@ from pathlib import Path
 from gensim.models import Word2Vec  
 from typing import Generator, Iterator
 from usure.wordvectors.vectorizer import Vectorizer
-from usure.common.fileadministrator import get_absolutefilepaths_ordered_by_size
+from usure.common.fileutils import get_absolutefilepaths_ordered_by_size
 
 
 def load_w2v(absolutefilepath) -> Word2Vec:

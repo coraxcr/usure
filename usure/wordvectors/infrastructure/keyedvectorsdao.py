@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from gensim.models import KeyedVectors  
 from typing import Generator, Iterator
-from usure.common.fileadministrator import get_absolutefilepaths_ordered_by_size
+from usure.common.fileutils import get_absolutefilepaths_ordered_by_size
 
 
 def load_kvs(absolutefilepath) -> KeyedVectors:

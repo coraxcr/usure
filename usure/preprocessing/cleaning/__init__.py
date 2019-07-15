@@ -1,10 +1,6 @@
-__name__= "cleaning"
-
+from .cleaner import Cleaner
 from .capitalizationcleaner import CapitalizationCleaner
 from .characterencodingcleaner import CharacterEncodingCleaner
-from .cleaner import Cleaner
-from .cleaningtask import CleaningTask
-from .cleaningtaskfactory import CleaningTaskFactory
 from .diacriticcleaner import DiacriticCleaner 
 from .emoticoncleaner import EmoticonCleaner
 from .hashtagcleaner import HashtagClener
@@ -15,7 +11,8 @@ from .punctuationcleaner import PuntuationCleaner
 from .stopwordscleaner import StopWordsCleaner
 from .urlcleaner import UrlCleaner
 from .wordlengtheningcleaner import WordLengtheningCleaner
-from .emptycleaner import EmptyCleaner
 from .twittercorpuscleaner import TwitterCorpusCleaner
 from .numericcleaner import NumericCleaner
 from .escapecleaner import EscapeCleaner
+from .cleanersbuilder import CleanersBuilder
+from .cleaningtask import CleaningTask
