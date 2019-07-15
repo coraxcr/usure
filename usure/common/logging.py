@@ -5,13 +5,13 @@ from os import path
 
 warnings.filterwarnings("ignore", category=UserWarning, module='bs4')
 
-def config(path):
+def config(fullpath):
     logging.basicConfig(
         level=logging.INFO,
         format = '%(levelname)s %(name)s %(asctime)s.%(msecs)03d %(message)s',
         datefmt = '%H:%M:%S',
         handlers=[
-            logging.FileHandler(path)
+            logging.FileHandler(fullpath)
             ,logging.StreamHandler()
             ]
     )

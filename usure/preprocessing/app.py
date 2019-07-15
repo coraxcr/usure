@@ -13,7 +13,7 @@ import usure.common.logging as usurelogging
 
 usurelogging.config(config.log_path)
 
-class APP:
+class App:
 
     def __init__(self, raw_corpus_rep:CorpusRepository,
         pre_corpus_rep:CorpusRepository,
@@ -82,5 +82,5 @@ if __name__ == "__main__":
         else:
             return basic_cleaning_task
     
-    etl = APP(raw_corpus_rep, pre_corpus_rep, get_cleaningtask)
+    etl = App(raw_corpus_rep, pre_corpus_rep, get_cleaningtask)
     etl.do()
