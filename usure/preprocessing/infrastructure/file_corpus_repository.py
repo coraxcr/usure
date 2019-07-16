@@ -15,7 +15,7 @@ class FileCorpusRepository(CorpusRepository):
         return result
     
     def get_all(self) -> Iterable[Corpus]:
-        files = fileutils.read_files(self._corpus_folder_path, [".txt", ".usu"], "utf_8")
+        files = fileutils.read_files(self._corpus_folder_path, [".txt", ".usu", ".xml"], "utf_8")
         for name, get_corpus in files:
             yield Corpus(name, get_corpus)
 

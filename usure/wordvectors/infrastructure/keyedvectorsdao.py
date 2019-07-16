@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from gensim.models import KeyedVectors  
-from typing import Generator, Iterator
+from typing import Generator, Iterator, Iterable
 from usure.common.fileutils import get_absolutefilepaths_ordered_by_size
 
 
@@ -30,10 +30,10 @@ class KeyedVectorsDAO:
     def _get_absolute_path(self, filename:str) -> str:
         return os.path.join(self._embeddingsfolderpath, filename) 
 
-    def get_models(self) -> FileKeyedVectors:
+    def get_all(self) -> Iterable[FileKeyedVectors]:
         absolutefilepaths=get_absolutefilepaths_ordered_by_size(self._embeddingsfolderpath, ".w2v")
         return FileKeyedVectors(absolutefilepaths)
 
-    def get_model(self, name_id) -> FileKeyedVectors:
-        absolutefilepath = os.path.join(self._embeddingsfolderpath, f"{name_id}")#.w2v
+    def get(self, name) -> FileKeyedVectors:
+        absolutefilepath = os.path.join(self._embeddingsfolderpath, f"{name_id}")
         return load_kvs(absolutefilepath)

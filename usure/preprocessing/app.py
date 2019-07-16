@@ -35,7 +35,9 @@ class App:
             chunk_numb = 0
             chunks = self._chunk(corpus, chunk_size)
             for chunk in chunks:
-                processed_sentences.extend(pool.map(self._map_to_each_line, chunk))
+                sentences = pool.map(self._map_to_each_line, chunk)
+                sentences = [sentence for sentence in sentences if sentence]
+                processed_sentences.extend(sentences)
                 chunk_numb += 1
                 usurelogging.info_time(f"Processed: {chunk_size * chunk_numb}")
         return processed_sentences

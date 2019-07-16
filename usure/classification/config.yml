@@ -1,0 +1,8 @@
+persistence:
+    file_system:
+      corpora:
+        #raw: usure/preprocessing/infrastructure/assets/corpora
+        #preprocessed: usure/preprocessing/infrastructure/assets/corpora/preprocessed
+        raw: usure/preprocessing/infrastructure/tests/assets/corpora
+        preprocessed: usure/preprocessing/infrastructure/tests/assets/corpora/preprocessed
+      log: usure/preprocessing/infrastructure/tests/assets/corpora/logs/classification.log

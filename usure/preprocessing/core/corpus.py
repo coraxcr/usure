@@ -11,6 +11,4 @@ class Corpus:
         return self._name
 
     def __iter__(self): 
-        for sentence in self._get_sentences():
-            if sentence:
-                yield sentence
+        return self._get_sentences()
