@@ -1,3 +1,3 @@
-from .trainingcorpusdao import TrainingCorpusDAO, FileTrainingCorpora as TrainingCorpora , FileTrainingCorpus as TrainingCorpus
-from .word2vecdao import Word2VecDAO
-from .keyedvectorsdao import KeyedVectorsDAO
+from .file_corpus_repository import FileCorpusRepository
+from .file_keyedvectors_repository import FileKeyedVectorsRepository
+from .file_word2vec_repository import FileWord2VecRepository

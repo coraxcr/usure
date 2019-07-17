@@ -50,3 +50,5 @@ def set_to_test_mode():
 loadyaml()
 
 change()
+
+set_to_test_mode()

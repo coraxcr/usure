@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class CommentsRep(ABC):
+class CommentsRepository(ABC):
 
     @abstractmethod
     def get_training(self):

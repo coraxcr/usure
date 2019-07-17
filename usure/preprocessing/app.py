@@ -1,4 +1,3 @@
-import logging
 import time 
 import os
 from multiprocessing import Pool, Value, cpu_count 
@@ -69,10 +68,8 @@ class App:
             self._pre_corpus_rep.save(prepocessed_corpus)        
 
 if __name__ == "__main__":
-    
-    config.set_to_test_mode()
 
-    usurelogging.config(os.path.join(config.logs, "preprocessing.log"))
+    usurelogging.config(config.logs, "preprocessing.log")
 
     raw_corpus_rep = FileCorpusRepository(config.unpreprocessed)
 

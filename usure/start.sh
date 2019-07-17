@@ -1,10 +1,18 @@
 #!/bin/bash
 
-cd ui
+cd ..
+
 source activate usure_env
-jupyter notebook 
+
+python -m usure.preprocessing.app
+
+python -m usure.wordvectors.app
+
 
 <<COMMENT
+
+jupyter notebook 
+
 init:
     pip install -r requirements.txt
 

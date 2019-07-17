@@ -3,7 +3,7 @@ from  typing import Iterable, Dict, Any
 from .models import WordVectors
 
 
-class WordVectorsRep(ABC):
+class WordVectorsRepository(ABC):
 
     def get(self,name:str) -> WordVectors:
         pass

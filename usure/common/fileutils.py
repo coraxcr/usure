@@ -2,17 +2,17 @@ import os
 from os import path
 import re
 from pathlib import Path
-from typing import Iterator, Tuple, Callable
+from typing import Iterator, Tuple, Callable, Iterable
 
-def get_filenames_ordered_by_size(absolutefolderpath:str, extension:str):
+def get_filenames_ordered_by_size(absolutefolderpath:str, extensions:Iterable[str]):
     dirnames = os.listdir(absolutefolderpath)
     filenames = [dirname for dirname in dirnames if path.isfile(path.join(absolutefolderpath, dirname))]
-    filenames = [filename for filename in filenames if Path(filename).suffix == extension]
+    filenames = [filename for filename in filenames if Path(filename).suffix in extensions]
     filenames.sort(key = lambda filename: path.getsize(path.join(absolutefolderpath, filename)))
     return filenames
 
-def get_absolutefilepaths_ordered_by_size(absolutefolderpath:str,extension:str):
-    filenames = get_filenames_ordered_by_size(absolutefolderpath, extension)
+def get_absolutefilepaths_ordered_by_size(absolutefolderpath:str,extensions:Iterable[str]):
+    filenames = get_filenames_ordered_by_size(absolutefolderpath, extensions)
     return [path.join(absolutefolderpath, filename) for filename in filenames]
 
 def read_file(path, encoding) -> Iterator[str]:

@@ -1,23 +1,19 @@
-import logging
-import time 
-import os
-from os.path import join
-from usure.wordvectors.embeddingsmachine import EmbeddingsMachine
-from usure.wordvectors.infrastructure import TrainingCorpusDAO, Word2VecDAO
+from usure import config
+import usure.common.logging as usurelogging
+from usure.wordvectors.core import EmbeddingsMachine
+from usure.wordvectors.infrastructure import FileCorpusRepository, FileKeyedVectorsRepository, FileWord2VecRepository
 
-
-location = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-
-logging.basicConfig(
-    level=logging.INFO,
-    handlers=[
-        logging.FileHandler(join(location,"infrastructure","assets","corpora","logs","wordvectors.log"))
-        ,logging.StreamHandler()
-        ]
-)
 
 if __name__ == "__main__":
-    corpus_dao = TrainingCorpusDAO()
-    w2v_dao = Word2VecDAO()
-    machine = EmbeddingsMachine(corpus_dao, w2v_dao)
+
+    usurelogging.config(config.logs, "wordvectors.log")
+
+    corpusrep = FileCorpusRepository(config.preprocessed)
+
+    w2vrep = FileWord2VecRepository(config.embeddings)
+
+    kvsrep = FileKeyedVectorsRepository(config.embeddings)
+
+    machine = EmbeddingsMachine(corpusrep, w2vrep, kvsrep)
+    
     machine.init_work()
