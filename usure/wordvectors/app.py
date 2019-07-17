@@ -15,5 +15,5 @@ if __name__ == "__main__":
     kvsrep = FileKeyedVectorsRepository(config.embeddings)
 
     machine = EmbeddingsMachine(corpusrep, w2vrep, kvsrep)
-    
+
     machine.init_work()

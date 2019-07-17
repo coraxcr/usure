@@ -6,7 +6,7 @@ import pytest
     ("casas", " casar"),
     ("corazones estaban cayendo", " corazón estar caer")
 ])
-def can_lemmatize_basic_spanish_words_test(text,expected):
-     cleaner = LemmatizationCleaner()
-     result = cleaner.clean(text)
-     assert result == expected
+def can_lemmatize_basic_spanish_words_test(text, expected):
+    cleaner = LemmatizationCleaner()
+    result = cleaner.clean(text)
+    assert result == expected

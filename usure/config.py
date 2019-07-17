@@ -1,4 +1,4 @@
-import yaml 
+import yaml
 import os
 from os import path
 
@@ -7,11 +7,13 @@ _config_file = "config.yml"
 
 _current_folder = path.dirname(__file__)
 
+
 def _get_full_path(path_part):
 
     return path.join(_current_folder, path_part)
 
-def loadyaml():
+
+def loadyamlfile():
 
     global _yamlconfig
 
@@ -19,7 +21,8 @@ def loadyaml():
 
         _yamlconfig = yaml.full_load(stream)
 
-def change():
+
+def loadvariables():
 
     global _filesystem, unpreprocessed, preprocessed, embeddings, classification, logs, assets
 
@@ -44,13 +47,13 @@ def set_to_test_mode():
 
     _config_file = "config.test.yml"
 
-    loadyaml()
-    
-    change()
+    loadyamlfile()
+
+    loadvariables()
 
 
-loadyaml()
+loadyamlfile()
 
-change()
+loadvariables()
 
-#set_to_test_mode()
+set_to_test_mode()

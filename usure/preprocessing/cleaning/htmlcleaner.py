@@ -2,6 +2,7 @@ from usure.preprocessing.cleaning.cleaner import Cleaner
 from gensim import utils
 from bs4 import BeautifulSoup
 
+
 class HtmlCleaner(Cleaner):
 
     def clean(self, text: str) -> str:

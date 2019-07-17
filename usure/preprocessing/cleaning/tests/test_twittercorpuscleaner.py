@@ -1,5 +1,6 @@
 from usure.preprocessing.cleaning.twittercorpuscleaner import TwitterCorpusCleaner
 
+
 def can_remove_all_id_test():
     cleaner = TwitterCorpusCleaner()
     text = "\"406449856862232577\",\"\"Las despedidas no deberian existir\"\""

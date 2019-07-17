@@ -1,5 +1,6 @@
 from usure.preprocessing.cleaning.cleaner import Cleaner
-import re 
+import re
+
 
 class HashtagClener(Cleaner):
 

@@ -10,7 +10,7 @@ def can_rid_mentions_off_test():
 
 
 def can_rid_mentions_off_2_test():
-    text =  "\"@TeolindaPolo: quiero pla"
+    text = "\"@TeolindaPolo: quiero pla"
     cleaned_text = ": quiero pla"
     cleaner = MentionCleaner()
     result = cleaner.clean(text)

@@ -1,6 +1,6 @@
 from typing import List
 from usure.preprocessing.cleaning import (
-    CapitalizationCleaner, 
+    CapitalizationCleaner,
     CharacterEncodingCleaner,
     Cleaner,
     DiacriticCleaner,
@@ -17,12 +17,13 @@ from usure.preprocessing.cleaning import (
     NumericCleaner,
     EscapeCleaner
 )
-from usure.preprocessing.infrastructure import EmoticonRepository, StopwordsRepository 
+from usure.preprocessing.infrastructure import EmoticonRepository, StopwordsRepository
+
 
 class CleanersBuilder:
 
     def __init__(self):
-        self._cleaners  = []
+        self._cleaners = []
 
     def _add_cleaner(self, cleaner: Cleaner):
         self._cleaners.append(cleaner)
@@ -45,7 +46,7 @@ class CleanersBuilder:
         self._add_cleaner(cleaner)
         return self
 
-    def add_emoticoncleaning(self, repository:EmoticonRepository):
+    def add_emoticoncleaning(self, repository: EmoticonRepository):
         cleaner = EmoticonCleaner(repository)
         self._add_cleaner(cleaner)
         return self
@@ -75,7 +76,7 @@ class CleanersBuilder:
         self._add_cleaner(cleaner)
         return self
 
-    def add_stopwordscleaning(self, repository:StopwordsRepository):
+    def add_stopwordscleaning(self, repository: StopwordsRepository):
         cleaner = StopWordsCleaner(repository)
         self._add_cleaner(cleaner)
         return self

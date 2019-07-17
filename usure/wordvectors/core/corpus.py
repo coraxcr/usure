@@ -1,8 +1,9 @@
-from typing import Iterator, Callable 
+from typing import Iterator, Callable
+
 
 class Corpus:
 
-    def __init__(self, name:str, get_sentences:Callable[[], Iterator[Iterator[str]]]):
+    def __init__(self, name: str, get_sentences: Callable[[], Iterator[Iterator[str]]]):
         self._name = name
         self._get_sentences = get_sentences
 
@@ -10,5 +11,5 @@ class Corpus:
     def name(self) -> str:
         return self._name
 
-    def __iter__(self) -> Iterator[Iterator[str]]: 
+    def __iter__(self) -> Iterator[Iterator[str]]:
         return self._get_sentences()

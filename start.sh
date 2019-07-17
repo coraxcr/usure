@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd ..
-
 source activate usure_env
 
 python -m usure.preprocessing.app
@@ -20,4 +18,5 @@ test:
     py.test tests
 
 .PHONY: init test
+
 COMMENT

@@ -6,13 +6,13 @@ from typing import Iterable
 class Word2VecRepository(ABC):
 
     @abstractmethod
-    def get(self, name:str) -> Word2Vec:
+    def get(self, name: str) -> Word2Vec:
         pass
-    
+
     @abstractmethod
     def get_all(self) -> Iterable[Word2Vec]:
         pass
 
     @abstractmethod
-    def save(self, w2v:Word2Vec):
+    def save(self, w2v: Word2Vec):
         pass

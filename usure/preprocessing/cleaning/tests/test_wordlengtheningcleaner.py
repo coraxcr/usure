@@ -14,7 +14,8 @@ def can_shorten_letter_wordlengthening_test(token, expected):
     cleaner = WordLengtheningCleaner()
     result = cleaner.clean(token)
     assert result == expected
-     
+
+
 @pytest.mark.parametrize("token,expected", [
     #("grandotototote", "grandototote"),
     ("pequenininito", "pequeninito"),

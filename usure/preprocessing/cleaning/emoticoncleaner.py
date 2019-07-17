@@ -10,16 +10,15 @@ class EmoticonCleaner(Cleaner):
         self.negativeemoticons = self.__emoticonrepository.get_negative_emoticons()
 
     def clean(self, text: str) -> str:
-        tokens = text.split(' ') 
+        tokens = text.split(' ')
         cleanedtokens = map(self.__substitute_by_placeholder, tokens)
         return ' '.join(cleanedtokens)
 
-    
     def __substitute_by_placeholder(self, token):
 
         if token in self.positiveemoticons:
             return "positiveemoticon"
         elif token in self.negativeemoticons:
             return "negativeemoticon"
-        else: 
+        else:
             return token

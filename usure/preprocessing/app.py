@@ -1,6 +1,6 @@
-import time 
+import time
 import os
-from multiprocessing import Pool, Value, cpu_count 
+from multiprocessing import Pool, Value, cpu_count
 from typing import Dict, Iterator, Callable
 import itertools
 from usure.preprocessing.cleaning import CleaningTask
@@ -9,11 +9,12 @@ from usure.preprocessing.infrastructure import FileCorpusRepository, StopwordsRe
 import usure.common.logging as usurelogging
 from usure import config
 
+
 class App:
 
-    def __init__(self, raw_corpus_rep:CorpusRepository,
-        pre_corpus_rep:CorpusRepository,
-        get_cleaningtask:Callable[[str], CleaningTask]):
+    def __init__(self, raw_corpus_rep: CorpusRepository,
+                 pre_corpus_rep: CorpusRepository,
+                 get_cleaningtask: Callable[[str], CleaningTask]):
         self._get_cleaningtask = get_cleaningtask
         self._raw_corpus_rep = raw_corpus_rep
         self._pre_corpus_rep = pre_corpus_rep
@@ -23,7 +24,7 @@ class App:
         return corpora
 
     @usurelogging.logtime
-    def _transform(self, corpus:Corpus) -> Corpus:  
+    def _transform(self, corpus: Corpus) -> Corpus:
         processed_sentences = []
         usurelogging.info_time(f"Corpus: {corpus.name}")
         with Pool(processes=cpu_count()) as pool:
@@ -39,9 +40,9 @@ class App:
                 usurelogging.info_time(f"Chunk no: {chunk_numb}")
         return processed_sentences
 
-    def _chunk(self, corpus:Corpus, chunk_size):
+    def _chunk(self, corpus: Corpus, chunk_size):
         chunk = []
-        count  = 0
+        count = 0
         for sentence in corpus:
             count += 1
             chunk.append((corpus.name, sentence))
@@ -51,7 +52,7 @@ class App:
         if chunk:
             yield chunk
 
-    def _map_to_each_line(self,chunk): 
+    def _map_to_each_line(self, chunk):
         corpus_name, text = chunk
         try:
             result = self._get_cleaningtask(corpus_name).clean(text)
@@ -64,8 +65,10 @@ class App:
         corpora = self._extract()
         for corpus in corpora:
             sentences = self._transform(corpus)
-            prepocessed_corpus = Corpus(f"{corpus.name}.usu", lambda: sentences)
-            self._pre_corpus_rep.save(prepocessed_corpus)        
+            prepocessed_corpus = Corpus(
+                f"{corpus.name}.usu", lambda: sentences)
+            self._pre_corpus_rep.save(prepocessed_corpus)
+
 
 if __name__ == "__main__":
 
@@ -74,25 +77,26 @@ if __name__ == "__main__":
     raw_corpus_rep = FileCorpusRepository(config.unpreprocessed)
 
     pre_corpus_rep = FileCorpusRepository(config.preprocessed)
-    
+
     stopwordsrep = StopwordsRepository(config.assets)
-    
+
     emoticonrep = EmoticonRepository(config.assets)
 
     basic_cleaning_task = CleaningTask.create_basic(emoticonrep, stopwordsrep)
 
-    twiter_claning_task = CleaningTask.create_twitter(emoticonrep, stopwordsrep)
+    twiter_claning_task = CleaningTask.create_twitter(
+        emoticonrep, stopwordsrep)
 
-    def get_cleaningtask(name:str):
+    def get_cleaningtask(name: str):
 
         if name == "tweets.txt":
 
             return twiter_claning_task
-        
+
         else:
-            
+
             return basic_cleaning_task
-    
+
     etl = App(raw_corpus_rep, pre_corpus_rep, get_cleaningtask)
 
     etl.do()

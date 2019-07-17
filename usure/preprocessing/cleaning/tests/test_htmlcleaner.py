@@ -10,6 +10,7 @@ def can_replace_all_htmlentities_test():
     cleaned_text = cleaner.clean(to_clean)
     assert cleaned_text == correctly_cleaning
 
+
 def is_cleaned_result_disting_from_toclean_test():
     cleaner = HtmlCleaner()
     cleaned_text = cleaner.clean(to_clean)
