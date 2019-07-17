@@ -45,8 +45,7 @@ class CleanersBuilder:
         self._add_cleaner(cleaner)
         return self
 
-    def add_emoticoncleaning(self):
-        repository = EmoticonRepository()
+    def add_emoticoncleaning(self, repository:EmoticonRepository):
         cleaner = EmoticonCleaner(repository)
         self._add_cleaner(cleaner)
         return self
@@ -76,8 +75,7 @@ class CleanersBuilder:
         self._add_cleaner(cleaner)
         return self
 
-    def add_stopwordscleaning(self):
-        repository = StopwordsRepository()
+    def add_stopwordscleaning(self, repository:StopwordsRepository):
         cleaner = StopWordsCleaner(repository)
         self._add_cleaner(cleaner)
         return self

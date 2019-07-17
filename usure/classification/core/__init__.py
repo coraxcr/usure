@@ -1,2 +1,2 @@
 from .sentencecleaner import SentenceCleaner
-from .keyedvectorsrep import KeyedVectorsRep
+from .wordvectorsrep import WordVectorsRep

@@ -23,8 +23,3 @@ class EmoticonCleaner(Cleaner):
             return "negativeemoticon"
         else: 
             return token
-
-#from nltk.tokenize import word_tokenize
-#tokens = word_tokenize(input_str)
-#stop_words = set(stopwords.words(‘english’))
-#from nltk.corpus import stopwords

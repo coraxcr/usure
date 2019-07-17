@@ -30,10 +30,10 @@ class KeyedVectorsDAO:
     def _get_absolute_path(self, filename:str) -> str:
         return os.path.join(self._embeddingsfolderpath, filename) 
 
-    def get_all(self) -> Iterable[FileKeyedVectors]:
+    def get_all(self) -> FileKeyedVectors:
         absolutefilepaths=get_absolutefilepaths_ordered_by_size(self._embeddingsfolderpath, ".w2v")
         return FileKeyedVectors(absolutefilepaths)
 
-    def get(self, name) -> FileKeyedVectors:
+    def get(self, name) -> KeyedVectors:
         absolutefilepath = os.path.join(self._embeddingsfolderpath, f"{name_id}")
         return load_kvs(absolutefilepath)

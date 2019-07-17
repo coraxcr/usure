@@ -1,11 +1,11 @@
 import os
+import pytest
 from usure.preprocessing.infrastructure import FileCorpusRepository
 from usure.preprocessing.core import Corpus
-import pytest
+from usure.preprocessing.infrastructure.tests import config
 
-testpath = os.path.join(os.path.dirname(__file__), "assets/corpora")
-repository = FileCorpusRepository(testpath)
-corpusname = "test.txt"
+repository = FileCorpusRepository(config.unpreprocessed)
+corpusname = "test_1.txt"
 
 def can_get_a_corpus_test():
     corpus = repository.get(corpusname)

@@ -1,0 +1,8 @@
+persistence:
+    file_system:
+      unpreprocessed: data/unprocessed
+      preprocessed: data/preprocessed
+      embeddings: data/embeddings
+      classification: data/classification
+      logs: data/logs
+      assets:  data/assets

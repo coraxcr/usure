@@ -1,6 +1,7 @@
 from typing import List
 from functools import reduce
 from usure.preprocessing.cleaning import Cleaner, CleanersBuilder
+from usure.preprocessing.infrastructure import EmoticonRepository, StopwordsRepository
 
 class CleaningTask:
 
@@ -14,18 +15,18 @@ class CleaningTask:
         return cleaned_text
 
     @classmethod
-    def create_basic(cls):
+    def create_basic(cls, emoticonrep:EmoticonRepository, stopwordsrep:StopwordsRepository):
         cleaners = (CleanersBuilder()
         .add_htmlcleaning()
         .add_urlcleaning()
         .add_escapecleaner()
         .add_mentioncleaning()
         .add_hashtagcleaning()
-        .add_emoticoncleaning()
+        .add_emoticoncleaning(emoticonrep)
         .add_captalizationcleaning()
         .add_wordlengtheningcleaning()
         .add_puntuationcleaning()
-        .add_stopwordscleaning()
+        .add_stopwordscleaning(stopwordsrep)
         .add_diacriticcleaning()
         .add_numericcleaner()
         .add_encodingcleaning()
@@ -33,7 +34,7 @@ class CleaningTask:
         return cls(cleaners)
 
     @classmethod
-    def create_twitter(cls):
+    def create_twitter(cls, emoticonrep:EmoticonRepository, stopwordsrep:StopwordsRepository):
         cleaners = (CleanersBuilder()
         .add_twittercorpuscleaner()
         .add_htmlcleaning()
@@ -41,11 +42,11 @@ class CleaningTask:
         .add_escapecleaner()
         .add_mentioncleaning()
         .add_hashtagcleaning()
-        .add_emoticoncleaning()
+        .add_emoticoncleaning(emoticonrep)
         .add_captalizationcleaning()
         .add_wordlengtheningcleaning()
         .add_puntuationcleaning()
-        .add_stopwordscleaning()
+        .add_stopwordscleaning(stopwordsrep)
         .add_diacriticcleaning()
         .add_numericcleaner()
         .add_encodingcleaning()

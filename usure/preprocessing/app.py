@@ -6,12 +6,9 @@ from typing import Dict, Iterator, Callable
 import itertools
 from usure.preprocessing.cleaning import CleaningTask
 from usure.preprocessing.core import Corpus, CorpusRepository
-from usure.preprocessing import config
-from usure.preprocessing.infrastructure import FileCorpusRepository
+from usure.preprocessing.infrastructure import FileCorpusRepository, StopwordsRepository, EmoticonRepository
 import usure.common.logging as usurelogging
-
-
-usurelogging.config(config.log_path)
+from usure import config
 
 class App:
 
@@ -34,12 +31,13 @@ class App:
             chunk_size = 400000
             chunk_numb = 0
             chunks = self._chunk(corpus, chunk_size)
+            usurelogging.info_time(f"Max chunk size: {chunk_size}")
             for chunk in chunks:
                 sentences = pool.map(self._map_to_each_line, chunk)
                 sentences = [sentence for sentence in sentences if sentence]
                 processed_sentences.extend(sentences)
                 chunk_numb += 1
-                usurelogging.info_time(f"Processed: {chunk_size * chunk_numb}")
+                usurelogging.info_time(f"Chunk no: {chunk_numb}")
         return processed_sentences
 
     def _chunk(self, corpus:Corpus, chunk_size):
@@ -68,21 +66,36 @@ class App:
         for corpus in corpora:
             sentences = self._transform(corpus)
             prepocessed_corpus = Corpus(f"{corpus.name}.usu", lambda: sentences)
-            self._pre_corpus_rep.save(prepocessed_corpus)
-        
+            self._pre_corpus_rep.save(prepocessed_corpus)        
 
 if __name__ == "__main__":
-    raw_corpus_rep = FileCorpusRepository(config.raw_corpora_folder_path)
-    pre_corpus_rep = FileCorpusRepository(config.preprocessed_corpora_folder_path)
     
-    basic_cleaning_task = CleaningTask.create_basic()
-    twiter_claning_task = CleaningTask.create_twitter()
+    config.set_to_test_mode()
+
+    usurelogging.config(os.path.join(config.logs, "preprocessing.log"))
+
+    raw_corpus_rep = FileCorpusRepository(config.unpreprocessed)
+
+    pre_corpus_rep = FileCorpusRepository(config.preprocessed)
+    
+    stopwordsrep = StopwordsRepository(config.assets)
+    
+    emoticonrep = EmoticonRepository(config.assets)
+
+    basic_cleaning_task = CleaningTask.create_basic(emoticonrep, stopwordsrep)
+
+    twiter_claning_task = CleaningTask.create_twitter(emoticonrep, stopwordsrep)
 
     def get_cleaningtask(name:str):
+
         if name == "tweets.txt":
+
             return twiter_claning_task
+        
         else:
+            
             return basic_cleaning_task
     
     etl = App(raw_corpus_rep, pre_corpus_rep, get_cleaningtask)
+
     etl.do()

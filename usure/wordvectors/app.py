@@ -5,6 +5,7 @@ from os.path import join
 from usure.wordvectors.embeddingsmachine import EmbeddingsMachine
 from usure.wordvectors.infrastructure import TrainingCorpusDAO, Word2VecDAO
 
+
 location = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 logging.basicConfig(

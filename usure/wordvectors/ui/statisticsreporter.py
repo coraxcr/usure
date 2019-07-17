@@ -16,7 +16,7 @@ class StatisticsReporter:
 
     def __init__(self, keyed_vectors:KeyedVectors):
         self._keyed_vectors = keyed_vectors
-        self._freq_dict = { word:vocab.count for word,vocab in self._keyed_vectors.vocab.items() }
+        self._freq_dict = { word:vocab.count for word, vocab in self._keyed_vectors.vocab.items() }
 
     def plot_wordcloud(self, max_words=250):
         wordcloud = WordCloud(width=1600, height=800, max_font_size=200, max_words=max_words)

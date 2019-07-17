@@ -1,8 +1,9 @@
-from usure.preprocessing.infrastructure.emoticon_repository import EmoticonRepository
 import pytest
+from usure.preprocessing.infrastructure.emoticon_repository import EmoticonRepository
+from usure.preprocessing.infrastructure.tests import config
 
 
-repository = EmoticonRepository()
+repository = EmoticonRepository(config.assets)
 
 def can_find_a_negative_emoticon_test():
     emoticons = repository.get_negative_emoticons()
