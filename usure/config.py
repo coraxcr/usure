@@ -37,6 +37,7 @@ def change():
 
     assets = _get_full_path(_filesystem["assets"])
 
+
 def set_to_test_mode():
 
     global _config_file
@@ -47,8 +48,9 @@ def set_to_test_mode():
     
     change()
 
+
 loadyaml()
 
 change()
 
-set_to_test_mode()
+#set_to_test_mode()
