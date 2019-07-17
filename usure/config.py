@@ -1,59 +1,53 @@
-import yaml
-import os
+"""Module for infrastructure configuration"""
 from os import path
+import yaml
 
 
-_config_file = "config.yml"
+class Config:
+    """Configuration file"""
 
-_current_folder = path.dirname(__file__)
+    def __init__(self):
 
+        self._config_file = "config.yml"
 
-def _get_full_path(path_part):
+        self._current_folder = path.dirname(__file__)
 
-    return path.join(_current_folder, path_part)
-
-
-def loadyamlfile():
-
-    global _yamlconfig
-
-    with open(path.join(_current_folder, _config_file), "r") as stream:
-
-        _yamlconfig = yaml.full_load(stream)
+        self._loadvariables()
 
 
-def loadvariables():
-
-    global _filesystem, unpreprocessed, preprocessed, embeddings, classification, logs, assets
-
-    _filesystem = _yamlconfig["persistence"]["file_system"]
-
-    unpreprocessed = _get_full_path(_filesystem["unpreprocessed"])
-
-    preprocessed = _get_full_path(_filesystem["preprocessed"])
-
-    embeddings = _get_full_path(_filesystem["embeddings"])
-
-    classification = _get_full_path(_filesystem["classification"])
-
-    logs = _get_full_path(_filesystem["logs"])
-
-    assets = _get_full_path(_filesystem["assets"])
+    def _get_full_path(self, path_part):
+        """Join current folder path with other part."""
+        return path.join(self._current_folder, path_part)
 
 
-def set_to_test_mode():
+    def _loadvariables(self):
+        """Load constants"""
 
-    global _config_file
+        with open(path.join(self._current_folder, self._config_file), "r") as stream:
 
-    _config_file = "config.test.yml"
+            self._yamlconfig = yaml.full_load(stream)
 
-    loadyamlfile()
+        self._filesystem = self._yamlconfig["persistence"]["file_system"]
 
-    loadvariables()
+        self.unpreprocessed = self._get_full_path(self._filesystem["unpreprocessed"])
+
+        self.preprocessed = self._get_full_path(self._filesystem["preprocessed"])
+
+        self.embeddings = self._get_full_path(self._filesystem["embeddings"])
+
+        self.classification = self._get_full_path(self._filesystem["classification"])
+
+        self.logs = self._get_full_path(self._filesystem["logs"])
+
+        self.assets = self._get_full_path(self._filesystem["assets"])
 
 
-loadyamlfile()
+    def set_to_test_mode(self):
+        """Change load variables to test mode"""
 
-loadvariables()
+        self._config_file = "config.test.yml"
 
-set_to_test_mode()
+        self._loadvariables()
+
+config = Config()
+config.set_to_test_mode()

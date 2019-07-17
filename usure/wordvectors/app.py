@@ -1,4 +1,4 @@
-from usure import config
+from usure.config import config
 import usure.common.logging as usurelogging
 from usure.wordvectors.core import EmbeddingsMachine
 from usure.wordvectors.infrastructure import FileCorpusRepository, FileKeyedVectorsRepository, FileWord2VecRepository

@@ -7,7 +7,7 @@ from usure.preprocessing.cleaning import CleaningTask
 from usure.preprocessing.core import Corpus, CorpusRepository
 from usure.preprocessing.infrastructure import FileCorpusRepository, StopwordsRepository, EmoticonRepository
 import usure.common.logging as usurelogging
-from usure import config
+from usure.config import config
 
 
 class App:
