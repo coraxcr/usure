@@ -2,7 +2,9 @@ import os
 import pytest
 from usure.preprocessing.infrastructure import FileCorpusRepository
 from usure.preprocessing.core import Corpus
-from usure.preprocessing.infrastructure.tests import config
+from usure.config import config
+
+config.set_to_test_mode()
 
 repository = FileCorpusRepository(config.unpreprocessed)
 corpusname = "test_1.txt"

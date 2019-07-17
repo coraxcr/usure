@@ -1,7 +1,8 @@
 import pytest
 from usure.preprocessing.infrastructure.emoticon_repository import EmoticonRepository
-from usure.preprocessing.infrastructure.tests import config
+from usure.config import config
 
+config.set_to_test_mode()
 
 repository = EmoticonRepository(config.assets)
 
