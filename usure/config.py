@@ -50,4 +50,4 @@ class Config:
         self._loadvariables()
 
 config = Config()
-config.set_to_test_mode()
+#config.set_to_test_mode()
