@@ -3,7 +3,7 @@ from gensim.models import KeyedVectors
 from typing import Iterable
 
 
-class KeyedVectorsRepository(ABC):
+class KeyedVectorsRep(ABC):
 
     @abstractmethod
     def get(self, name: str) -> KeyedVectors:

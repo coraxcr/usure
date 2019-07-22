@@ -3,7 +3,7 @@ from typing import Iterable
 from usure.preprocessing.core import Corpus
 
 
-class CorpusRepository(ABC):
+class CorpusRep(ABC):
 
     @abstractmethod
     def get(self, name: str) -> Corpus:

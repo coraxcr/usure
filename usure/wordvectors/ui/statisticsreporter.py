@@ -1,4 +1,3 @@
-import sys
 import os
 import numpy as np
 import pandas as pd
@@ -9,8 +8,8 @@ from wordcloud import WordCloud
 from gensim.models import Word2Vec
 from gensim.models.keyedvectors import KeyedVectors, Vocab
 from typing import Dict, List
-from usure.wordvectors.infrastructure import Word2VecDAO, KeyedVectorsDAO
-
+from usure.wordvectors.infrastructure import FileWord2VecRep, FileKeyedVectorsRep
+from usure.config import config
 
 class StatisticsReporter:
 
@@ -100,9 +99,10 @@ class StatisticsReporter:
 
 
 if __name__ == "__main__":
-    kvs_dao = KeyedVectorsDAO()
-    facebook2013 = kvs_dao.get_model("sbw_vectors.bin")
-    st = StatisticsReporter(facebook2013.wv)
+    config.set_to_test_mode()
+    kvs_rep = FileKeyedVectorsRep(config.embeddings)
+    cardellino = kvs_rep.get("test_0.txt.usu.sw.kvs")
+    st = StatisticsReporter(cardellino)
     st.plot_wordcloud(max_words=250)
     st.plot_histogram(numb_top_words=60)
     st.plot_scatter(numb_words=1000, num_dim=2)

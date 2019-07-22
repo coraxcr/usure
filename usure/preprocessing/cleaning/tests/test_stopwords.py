@@ -1,11 +1,11 @@
 from usure.preprocessing.cleaning.stopwordscleaner import StopWordsCleaner
-from usure.preprocessing.infrastructure.tests.stopswordsrepository_stub import stopwords_stub_repository
+from usure.preprocessing.infrastructure.tests.stopswordsrep_stub import stopwords_stub_rep
 
 
-def can_remove_spanish_stopwords_test(stopwords_stub_repository):
+def can_remove_spanish_stopwords_test(stopwords_stub_rep):
     text = "el carro había habia estado en la casa"
     cleaned_text = "carro casa"
-    cleaner = StopWordsCleaner(stopwords_stub_repository)
+    cleaner = StopWordsCleaner(stopwords_stub_rep)
     result = cleaner.clean(text)
     assert cleaned_text == result
 

@@ -1,13 +1,13 @@
 from usure.classification.core import SentenceCleaner
 from usure.preprocessing.cleaning import CleaningTask
-from usure.preprocessing.infrastructure import EmoticonRepository, StopwordsRepository
+from usure.preprocessing.infrastructure import EmoticonRep, StopwordsRep
 
 
-class PreproSentenceCleaner(SentenceCleaner):
+class BasicSentenceCleaner(SentenceCleaner):
 
     def __init__(self, folderpath: str):
         self._cleaner = CleaningTask.create_basic(
-            EmoticonRepository(folderpath), StopwordsRepository(folderpath))
+            EmoticonRep(folderpath), StopwordsRep(folderpath))
 
-    def clean(text: str) -> str:
+    def clean(self, text: str) -> str:
         return self._cleaner.clean(text)

@@ -1,2 +1,2 @@
 from .corpus import Corpus
-from .corpus_repository import CorpusRepository
+from .corpus_rep import CorpusRep

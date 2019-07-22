@@ -1,6 +1,6 @@
 import multiprocessing
 from gensim.models import Word2Vec
-from usure.wordvectors.core import CorpusRepository, Corpus
+from usure.wordvectors.core import CorpusRep, Corpus
 from usure.common import logging
 
 

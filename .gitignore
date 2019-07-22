@@ -3,11 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=python,visualstudiocode
 
 usure/data
-usure/data_test/embeddings/*.w2v
-usure/data_test/embeddings/*.bin
-usure/data_test/embeddings/*.kvs
 usure/data_test/logs/*.logs
-usure/data_test/classification
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

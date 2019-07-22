@@ -1,13 +1,13 @@
 from typing import Iterable, Iterator
 from usure.wordvectors.core import Corpus
-from usure.preprocessing.infrastructure import FileCorpusRepository as PreprocessingCorpusRepository
+from usure.preprocessing.infrastructure import FileCorpusRep as PreprocessingFileCorpusRep
 from usure.preprocessing.core import Corpus as PreprocessingCorpus
 
 
-class FileCorpusRepository:
+class FileCorpusRep:
 
     def __init__(self, folderpath: str):
-        self.repository = PreprocessingCorpusRepository(folderpath)
+        self.repository = PreprocessingFileCorpusRep(folderpath)
 
     def get(self, name: str) -> Corpus:
         precorpus = self.repository.get(name)

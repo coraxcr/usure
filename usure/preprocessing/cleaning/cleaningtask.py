@@ -1,7 +1,7 @@
 from typing import List
 from functools import reduce
 from usure.preprocessing.cleaning import Cleaner, CleanersBuilder
-from usure.preprocessing.infrastructure import EmoticonRepository, StopwordsRepository
+from usure.preprocessing.infrastructure import EmoticonRep, StopwordsRep
 
 
 class CleaningTask:
@@ -17,7 +17,7 @@ class CleaningTask:
         return cleaned_text
 
     @classmethod
-    def create_basic(cls, emoticonrep: EmoticonRepository, stopwordsrep: StopwordsRepository):
+    def create_basic(cls, emoticonrep: EmoticonRep, stopwordsrep: StopwordsRep):
         cleaners = (CleanersBuilder()
                     .add_htmlcleaning()
                     .add_urlcleaning()
@@ -36,7 +36,7 @@ class CleaningTask:
         return cls(cleaners)
 
     @classmethod
-    def create_twitter(cls, emoticonrep: EmoticonRepository, stopwordsrep: StopwordsRepository):
+    def create_twitter(cls, emoticonrep: EmoticonRep, stopwordsrep: StopwordsRep):
         cleaners = (CleanersBuilder()
                     .add_twittercorpuscleaner()
                     .add_htmlcleaning()

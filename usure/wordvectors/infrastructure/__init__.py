@@ -1,3 +1,3 @@
-from .file_corpus_repository import FileCorpusRepository
-from .file_keyedvectors_repository import FileKeyedVectorsRepository
-from .file_word2vec_repository import FileWord2VecRepository
+from .file_corpus_rep import FileCorpusRep
+from .file_keyedvectors_rep import FileKeyedVectorsRep
+from .file_word2vec_rep import FileWord2VecRep

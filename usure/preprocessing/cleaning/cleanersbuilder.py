@@ -17,7 +17,7 @@ from usure.preprocessing.cleaning import (
     NumericCleaner,
     EscapeCleaner
 )
-from usure.preprocessing.infrastructure import EmoticonRepository, StopwordsRepository
+from usure.preprocessing.infrastructure import EmoticonRep, StopwordsRep
 
 
 class CleanersBuilder:
@@ -46,7 +46,7 @@ class CleanersBuilder:
         self._add_cleaner(cleaner)
         return self
 
-    def add_emoticoncleaning(self, repository: EmoticonRepository):
+    def add_emoticoncleaning(self, repository: EmoticonRep):
         cleaner = EmoticonCleaner(repository)
         self._add_cleaner(cleaner)
         return self
@@ -76,7 +76,7 @@ class CleanersBuilder:
         self._add_cleaner(cleaner)
         return self
 
-    def add_stopwordscleaning(self, repository: StopwordsRepository):
+    def add_stopwordscleaning(self, repository: StopwordsRep):
         cleaner = StopWordsCleaner(repository)
         self._add_cleaner(cleaner)
         return self

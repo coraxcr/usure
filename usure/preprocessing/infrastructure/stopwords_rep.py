@@ -3,7 +3,7 @@ from os.path import join
 import os
 
 
-class StopwordsRepository:
+class StopwordsRep:
 
     def __init__(self, folderpath):
         self._folderpath = folderpath

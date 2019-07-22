@@ -1,5 +1,6 @@
 import os
 from os import path
+from pathlib import Path
 from typing import Iterable
 from gensim.models import KeyedVectors
 from usure.common import fileutils
@@ -11,7 +12,7 @@ def load_kvs(path) -> KeyedVectors:
     return kvs
 
 
-class FileKeyedVectorsRepository:
+class FileKeyedVectorsRep:
 
     def __init__(self, folderpath: str):
         self._folder_path = folderpath

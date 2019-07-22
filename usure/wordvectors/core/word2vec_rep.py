@@ -3,7 +3,7 @@ from gensim.models import Word2Vec
 from typing import Iterable
 
 
-class Word2VecRepository(ABC):
+class Word2VecRep(ABC):
 
     @abstractmethod
     def get(self, name: str) -> Word2Vec:

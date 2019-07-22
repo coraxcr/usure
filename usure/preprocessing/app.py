@@ -1,19 +1,17 @@
-import time
 import os
 from multiprocessing import Pool, Value, cpu_count
 from typing import Dict, Iterator, Callable
-import itertools
 from usure.preprocessing.cleaning import CleaningTask
-from usure.preprocessing.core import Corpus, CorpusRepository
-from usure.preprocessing.infrastructure import FileCorpusRepository, StopwordsRepository, EmoticonRepository
+from usure.preprocessing.core import Corpus, CorpusRep
+from usure.preprocessing.infrastructure import FileCorpusRep, StopwordsRep, EmoticonRep
 import usure.common.logging as usurelogging
 from usure.config import config
 
 
 class App:
 
-    def __init__(self, raw_corpus_rep: CorpusRepository,
-                 pre_corpus_rep: CorpusRepository,
+    def __init__(self, raw_corpus_rep: CorpusRep,
+                 pre_corpus_rep: CorpusRep,
                  get_cleaningtask: Callable[[str], CleaningTask]):
         self._get_cleaningtask = get_cleaningtask
         self._raw_corpus_rep = raw_corpus_rep
@@ -74,13 +72,13 @@ if __name__ == "__main__":
 
     usurelogging.config(config.logs, "preprocessing.log")
 
-    raw_corpus_rep = FileCorpusRepository(config.unpreprocessed)
+    raw_corpus_rep = FileCorpusRep(config.unpreprocessed)
 
-    pre_corpus_rep = FileCorpusRepository(config.preprocessed)
+    pre_corpus_rep = FileCorpusRep(config.preprocessed)
 
-    stopwordsrep = StopwordsRepository(config.assets)
+    stopwordsrep = StopwordsRep(config.assets)
 
-    emoticonrep = EmoticonRepository(config.assets)
+    emoticonrep = EmoticonRep(config.assets)
 
     basic_cleaning_task = CleaningTask.create_basic(emoticonrep, stopwordsrep)
 

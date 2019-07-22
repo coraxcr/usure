@@ -1,7 +1,8 @@
 from os import path
 from typing import Iterable
 from gensim.models import Word2Vec
-
+from pathlib import Path
+from usure.common import fileutils
 
 def load_w2v(path) -> Word2Vec:
     w2v = Word2Vec.load(path)
@@ -9,7 +10,7 @@ def load_w2v(path) -> Word2Vec:
     return w2v
 
 
-class FileWord2VecRepository:
+class FileWord2VecRep:
 
     def __init__(self, folderpath: str):
         self._folder_path = folderpath

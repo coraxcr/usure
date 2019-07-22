@@ -1,12 +1,11 @@
-from gensim.models import Word2Vec
-from usure.wordvectors.core import CorpusRepository, Word2VecRepository, KeyedVectorsRepository, Corpus
+from usure.wordvectors.core import CorpusRep, Word2VecRep, KeyedVectorsRep, Corpus
 from .vectorizer import Vectorizer
 
 
 class EmbeddingsMachine:
 
-    def __init__(self, corpusrep: CorpusRepository,
-                 w2vrep: Word2VecRepository, kvsrep: KeyedVectorsRepository):
+    def __init__(self, corpusrep: CorpusRep,
+                 w2vrep: Word2VecRep, kvsrep: KeyedVectorsRep):
 
         self._corpusrep = corpusrep
 

@@ -2,11 +2,11 @@ import os
 from os import path
 from pathlib import Path
 from typing import List, Callable, Iterable
-from usure.preprocessing.core import Corpus, CorpusRepository
+from usure.preprocessing.core import Corpus, CorpusRep
 from usure.common import fileutils
 
 
-class FileCorpusRepository(CorpusRepository):
+class FileCorpusRep(CorpusRep):
 
     def __init__(self, folder_path: str):
         self.folder_path = folder_path

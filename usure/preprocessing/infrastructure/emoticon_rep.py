@@ -3,7 +3,7 @@ import os
 from os.path import join
 
 
-class EmoticonRepository:
+class EmoticonRep:
 
     def __init__(self, folderpath):
         self._folderpath = folderpath

@@ -1,9 +1,9 @@
 from abc import ABC, abstractclassmethod
 from typing import Iterable, Dict, Any
-from .models import WordVectors
+from .wordvectors import WordVectors
 
 
-class WordVectorsRepository(ABC):
+class WordVectorsRep(ABC):
 
     def get(self, name: str) -> WordVectors:
         pass
