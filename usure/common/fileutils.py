@@ -4,6 +4,8 @@ import re
 from pathlib import Path
 from typing import Iterator, Tuple, Callable, Iterable
 
+def join(base_path, path_or_file):
+    return path.join(base_path, path_or_file)
 
 def get_filenames_ordered_by_size(absolutefolderpath: str, extensions: Iterable[str]):
     dirnames = os.listdir(absolutefolderpath)

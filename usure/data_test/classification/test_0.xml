@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tweets>
+	<tweet>
+		<tweetid>768225400254111744</tweetid>
+		<user>14628107</user>
+		<content>@NoilyMV yo soy totalmente puntual</content>
+		<date>Tue Aug 23 23:16:23 +0000 2016</date>
+		<lang>es</lang>
+		<sentiment>
+			<polarity><value>NONE</value></polarity>
+		</sentiment>
+	</tweet>
+	<tweet>
+		<tweetid>769802080701648896</tweetid>
+		<user>2774677761</user>
+		<content>@DexterAOM por eso es que se dice lo del final, yo opino igual que usted, tampoco es q sea el final más malo de la historia es regular</content>
+		<date>Sun Aug 28 07:41:32 +0000 2016</date>
+		<lang>es</lang>
+		<sentiment>
+			<polarity><value>NEU</value></polarity>
+		</sentiment>
+	</tweet>
+	<tweet>
+		<tweetid>772550560998301697</tweetid>
+		<user>60878511</user>
+		<content>@robertobrenes Bueno, no es tanto lo mayor como cuánto de campo sea usted. Sos cartaguito en cada aspecto de tu vida, por lo visto.</content>
+		<date>Sun Sep 04 21:43:01 +0000 2016</date>
+		<lang>es</lang>
+		<sentiment>
+			<polarity><value>N</value></polarity>
+		</sentiment>
+	</tweet>
+</tweets>

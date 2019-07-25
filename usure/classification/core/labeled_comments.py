@@ -3,6 +3,7 @@ from typing import Iterable
 class LabeledComments:
 
     def __init__(self, name:str, comments:Iterable[str], labels:Iterable[any]):
+        assert len(comments) == len(labels), "Lenght of comments and labels are not the same."
         self._name = name
         self._comments = comments
         self._labels = labels
@@ -19,11 +20,6 @@ class LabeledComments:
     def labels(self):
         return self._labels
 
-    def get_training(percentage = 80) -> LabeledComments:
-        raise NotImplementedError()
-
-    def get_dev(percentage = 10) -> LabeledComments:
-        raise NotImplementedError()
-
-    def get_test(percentage = 10) -> LabeledComments:
-        raise NotImplementedError()
+    @property
+    def count(self):
+        return len(self._comments)
