@@ -1,14 +1,14 @@
 import math
-from xml.etree import ElementTree as et
 from typing import Iterable
-from usure.common import fileutils
-from usure.classification.core import LabeledCommentsDao, LabeledComments
+from usure.classification.core import LabeledCommentsDao, LabeledComments, SentenceCleaner
+from .intertass_xml_parser import InterTassXMLParser
 
 
 class FileLabeledCommentsDao(LabeledCommentsDao):
 
-    def __init__(self, folderpath:str):
+    def __init__(self, folderpath:str, cleaner:SentenceCleaner):
         self._folderpath = folderpath
+        self._cleaner = cleaner
 
     def get(self, name:str) -> LabeledComments:
         comments = self._get_from_xml(name)
@@ -28,21 +28,6 @@ class FileLabeledCommentsDao(LabeledCommentsDao):
             pivot += chunk_size
         return chunks 
 
-
     def _get_from_xml(self, name):
-        parser = InterTassXMLParser(self._folderpath, name)
+        parser = InterTassXMLParser(self._folderpath, name, self._cleaner)
         return parser.get()
-
-class InterTassXMLParser:
-    
-    def __init__(self, folderpath, filename):
-        self._name = filename
-        self._xml = et.parse(fileutils.join(folderpath, filename)).getroot()
-
-    def get(self) -> LabeledComments:
-        tweets = self._xml.findall("tweet")
-        comments, labels = [], []
-        for tweet in tweets:
-            comments.append(tweet.find("content").text)
-            labels.append(tweet.find("./sentiment/polarity/value").text)
-        return LabeledComments(self._name, comments, labels)
