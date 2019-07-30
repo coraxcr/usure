@@ -16,7 +16,7 @@ class App:
     
     def do(self):
         labeledcomments = self._commentsdao.get("intertass-CR-train-tagged.xml")
-        wv = self._wvrep.get("tweets.txt.usu.sw.kvs")
+        wv = self._wvrep.get("CorpusFBCR2013.txt.usu.bw.kvs")
         cnn = CNN1D(labeledcomments, wv)
         cnn.work()
 

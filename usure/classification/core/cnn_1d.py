@@ -7,10 +7,23 @@ from keras.layers import Conv1D, GlobalMaxPooling1D, Input, Dense, concatenate, 
 from keras.models import Model, Sequential
 from keras.layers.embeddings import Embedding
 from keras.callbacks import ModelCheckpoint
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder, LabelBinarizer
+import keras_metrics as km
+from sklearn import metrics
+import pandas as pd
+from sklearn.model_selection import train_test_split
+import os
+import keras
+#reproductability
+from numpy.random import seed
+seed(10)
+from tensorflow import set_random_seed
+set_random_seed(11)
 
 from .labeled_comments import LabeledComments
 from .wordvectors import WordVectors
+import usure.common.logging as usurelogging
+from usure.config import config 
 
 
 class CNN1D:
@@ -33,13 +46,17 @@ class CNN1D:
 
     
     def map_to_one_hot_labels(self, labels:Iterable[str]):#inverted = label_encoder.inverse_transform([argmax(onehot_encoded[0, :])])
+        lb = LabelBinarizer()
+        lb.fit(labels)
+        one_hot =  lb.transform(labels)
+        return one_hot, lb.classes_
+    
+    def map_to_integers(self, labels:Iterable[str]):
         label_encoder = LabelEncoder()
         integer_encoded = label_encoder.fit_transform(labels)
-        onehot_encoder = OneHotEncoder(sparse=False)
-        integer_encoded = integer_encoded.reshape(len(integer_encoded), 1)
-        onehot_encoded = onehot_encoder.fit_transform(integer_encoded)
-        return onehot_encoded
-    
+        #integer_encoded = integer_encoded.reshape(len(integer_encoded), 1)
+        return integer_encoded
+
 
     def work(self):
 
@@ -49,8 +66,9 @@ class CNN1D:
         tokenizer.fit_on_texts(self._labeledcom.comments)
         embedding_matrix = self.map_to_embedding_matrix(tokenizer, self._wv)
         x = self.convert_to_padded_sequences(tokenizer, self._labeledcom.comments)
-        y = self.map_to_one_hot_labels(self._labeledcom.labels)
+        y, classes = self.map_to_one_hot_labels(self._labeledcom.labels)
 
+        x, x_dev, y, y_dev = train_test_split(x, y, test_size=0.25, random_state=42)
 
         input_comments = Input(shape=(max_words,), dtype='int32')
         tweet_encoder = Embedding(len(tokenizer.index_word)+1, 300, weights=[embedding_matrix], input_length=max_words, trainable=False)(input_comments)
@@ -67,12 +85,30 @@ class CNN1D:
         merged = Dense(4)(merged)
         output = Activation('softmax')(merged)
         model = Model(inputs=[input_comments], outputs=[output])
-        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-        model.summary()   
+        model.compile(loss='categorical_crossentropy', 
+                      optimizer='adam', 
+                      metrics=[keras.metrics.categorical_accuracy, 
+                      km.categorical_precision(),
+                      #km.categorical_recall(),
+                      km.categorical_f1_score()]
+        )
+        model.summary(print_fn=usurelogging.info)
 
-        #filepath="CNN_best_weights.{epoch:02d}-{val_acc:.4f}.hdf5"
-        #checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-        #model.fit(x_train_seq, y_train, batch_size=32, epochs=5,
-        #          validation_data=(x_val_seq, y_validation), callbacks = [checkpoint]) 
+        filepath = config.classification+"/"+"cnn_1.h5"
+        checkpoint = ModelCheckpoint(filepath, monitor='val_f1_score', verbose=1, save_best_only=True, mode='max')
 
-        model.fit(x, y, batch_size=32, epochs=5, validation_split=0.1)   
+        history = model.fit(x, y, batch_size=32, epochs=8, validation_data=(x_dev, y_dev), callbacks=[checkpoint])  
+        
+        df = pd.DataFrame(history.history)
+        usurelogging.info(os.linesep+df.to_string(float_format=lambda n: format(n, '#.2g')))
+
+        
+        model.load_weights(filepath)
+
+        y_pred = model.predict(x_dev)
+        y_dev = np.argmax(y_dev, axis=1)
+        y_pred = np.argmax(y_pred, axis=1)
+
+        usurelogging.info(os.linesep+metrics.classification_report(y_dev, y_pred, target_names=classes))
+        #usurelogging.info(metrics.confusion_matrix(y_dev, y_pred))
+        #usurelogging.info(metrics.accuracy_score(y_dev, y_pred))

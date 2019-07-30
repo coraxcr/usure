@@ -2,9 +2,10 @@ import logging
 import time
 import warnings
 from os import path
+import tensorflow as tf
 
 warnings.filterwarnings("ignore", category=UserWarning, module='bs4')
-
+tf.logging.set_verbosity(tf.logging.ERROR)
 
 def config(basepath, filename):
     fullpath = path.join(basepath, filename)
