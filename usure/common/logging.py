@@ -3,6 +3,8 @@ import time
 import warnings
 from os import path
 import tensorflow as tf
+import os
+
 
 warnings.filterwarnings("ignore", category=UserWarning, module='bs4')
 tf.logging.set_verbosity(tf.logging.ERROR)
@@ -29,6 +31,9 @@ def info_time(text):
 
 def info(text):
     logging.info(f"→ {text}")
+
+def infonl(text):
+    logging.info(f"→ {os.linesep}{text}")
 
 
 def start(text):

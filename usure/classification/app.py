@@ -4,7 +4,7 @@ from usure.classification.infrastructure import (
      BasicSentenceCleaner 
     ,FileLabeledCommentsDao
     ,FileWordVectorsRep)
-from usure.classification.core import CNN1D
+from usure.classification.core import Cnn, Svn
 
 
 class App:
@@ -16,9 +16,12 @@ class App:
     
     def do(self):
         labeledcomments = self._commentsdao.get("intertass-CR-train-tagged.xml")
+
         wv = self._wvrep.get("CorpusFBCR2013.txt.usu.bw.kvs")
-        cnn = CNN1D(labeledcomments, wv)
-        cnn.work()
+        #wvs = self._wvrep.get_all()
+        #for wv in wvs:
+        clasifier = Cnn(labeledcomments, wv)
+        clasifier.work()
 
 if __name__ == "__main__":
     usurelogging.config(config.logs, "classification.log")

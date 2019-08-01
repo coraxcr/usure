@@ -3,4 +3,7 @@ from .wordvectors import WordVectors
 from .wordvectors_rep import WordVectorsRep
 from .labeled_comments import LabeledComments
 from .labeled_comments_dao import LabeledCommentsDao
-from .cnn_1d import CNN1D
+from .cnn import Cnn
+from .svm import Svn
+from .metrics_reporter import MetricsReporter
+from .metrics_keras_callback import MetricsKerasCallback
