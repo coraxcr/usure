@@ -4,7 +4,7 @@ from usure.classification.infrastructure import (
      BasicSentenceCleaner 
     ,FileLabeledCommentsDao
     ,FileWordVectorsRep)
-from usure.classification.core import Cnn, Svn
+from usure.classification.core import CnnLab, SvmLab, ClassifierInput
 
 
 class App:
@@ -20,8 +20,7 @@ class App:
         wv = self._wvrep.get("CorpusFBCR2013.txt.usu.bw.kvs")
         #wvs = self._wvrep.get_all()
         #for wv in wvs:
-        clasifier = Cnn(labeledcomments, wv)
-        clasifier.work()
+        clasifier = CnnLab(ClassifierInput(labeledcomments, wv))
 
 if __name__ == "__main__":
     usurelogging.config(config.logs, "classification.log")

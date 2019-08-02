@@ -1,33 +1,47 @@
 from sklearn.metrics import accuracy_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import recall_score
-from sklearn.metrics import f1_score
-from keras.callbacks import Callback
-import numpy as np
-import pandas as pd
+from sklearn.metrics import classification_report
+from sklearn.metrics import log_loss
+from sklearn.metrics import confusion_matrix
+
 
 class MetricsReporter:
 
-    def __init__(self, y_true):
+    def __init__(self, y_true, categories = None):
         self._y_true = y_true
-        self._metrics = pd.DataFrame(columns=[
-             "accuracy"
-            ,"precision"
-            ,"recall"
-        ]
-        )
+        self._categories = categories
+        self._accuracies = []
+        self._losses =[]
+        self._classification_reports = []
+        self._confusion_matrices = []
 
-    def add_calculation(self, y_pred):
-        metrics = {
-            "accuracy" : accuracy_score(self._y_true, y_pred),
-            "precision" : precision_score(self._y_true, y_pred, average="micro"),
-            "recall": recall_score(self._y_true, y_pred, average="micro")
-        }
-        self._metrics = self._metrics.append(metrics, ignore_index=True)
+    @property
+    def categories(self):
+        return self._categories
 
-    def to_string(self):
-        return self._metrics.to_string(float_format=lambda n: format(n, '#.2g'), justify="right")
+    @property
+    def accuracies(self):
+        return self._accuracies
+    
+    @property
+    def losses(self):
+        return self._losses
+
+    @property 
+    def classification_reports(self):
+        return self._classification_reports
+
+    @property 
+    def confusion_matrices(self):
+        return self._confusion_matrices
+
+    def add_calculation(self, y_pred, raw_y_pred):
+        self._accuracies.append(accuracy_score(self._y_true, y_pred)),
+        self._losses.append(log_loss(self._y_true, raw_y_pred))
+        self._classification_reports.append(classification_report(self._y_true, y_pred, target_names=self._categories))
+        self._confusion_matrices.append(confusion_matrix(self._y_true, y_pred))
 
     @classmethod
-    def create(cls, y_true):
-        return cls(y_true)
+    def create(cls, y_true, class_names):
+        return cls(y_true, class_names)
+
+    #(float_format=lambda n: format(n, '#.2g'), justify="right")
