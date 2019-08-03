@@ -37,6 +37,8 @@ class Config:
 
         self.classification = self._get_full_path(self._filesystem["classification"])
 
+        self.models = self._get_full_path(self._filesystem["models"])
+
         self.logs = self._get_full_path(self._filesystem["logs"])
 
         self.assets = self._get_full_path(self._filesystem["assets"])

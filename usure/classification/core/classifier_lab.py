@@ -1,13 +1,15 @@
 from abc import ABC, abstractmethod
 from .classifier_input import ClassifierInput
 from .metrics_reporter import MetricsReporter
+from .model_dao import ModelDao
 
 
 class ClassifierLab:
     """Classifier Laboratory"""
 
-    def __init__(self, input:ClassifierInput):
+    def __init__(self, input:ClassifierInput, dao: ModelDao):
         self._input = input
+        self._dao = dao
         self._train_report = None
         self._validation_report = None
         self.research()

@@ -10,23 +10,24 @@ from .metrics_keras_callback import MetricsKerasCallback
 import usure.common.logging as usurelogging
 from usure.config import config 
 from .classifier_lab import ClassifierLab
-np.random.seed(5)
-tf.set_random_seed(5)
+from .model_dao import ModelDao
+#np.random.seed(5)
+#tf.set_random_seed(5)
 
 
 class CnnLab(ClassifierLab):
 
-    def __init__(self, input:ClassifierInput):
-        super().__init__(input)
+    def __init__(self, input:ClassifierInput, dao: ModelDao):
+        super().__init__(input, dao)
         
     @property
     def name(self):
-        return "CNN"
+        return f"cnn.{self._id}-{self._input.embeddings_name}.h5"
 
     def research(self):
-        #usurelogging.info(type(self).__name__)
+
         input = self._input
-        x_train, x_val, y_train, y_val = input.train_val_split(input.x, input.y)
+        
         input_comments = Input(shape=(input.comment_max_length,), dtype='int32')
         comment_encoder = Embedding(input.vocab_size, 300, weights=[input.embedding_matrix], input_length=input.comment_max_length, trainable=False)(input_comments)
         bigram_branch = Conv1D(filters=100, kernel_size=2, padding='valid', activation='relu', strides=1)(comment_encoder)
@@ -49,15 +50,8 @@ class CnnLab(ClassifierLab):
         
         #model.summary(print_fn=usurelogging.info)
 
-        filepath = config.classification+"/"+"cnn.h5"
-        
-        checkpoint = ModelCheckpoint(filepath, 
-            monitor='val_sparse_categorical_accuracy', 
-            verbose=0, 
-            save_weights_only = False,
-            save_best_only=True, 
-            mode='max')
-       
+
+        x_train, x_val, y_train, y_val = input.train_val_split(input.x, input.y)
         metrics = MetricsKerasCallback.create(x_train, y_train, x_val, y_val, input.categories) 
 
         model.fit(x_train, 
@@ -65,9 +59,10 @@ class CnnLab(ClassifierLab):
                   batch_size=32,
                   epochs=5,
                   validation_data=(x_val, y_val), 
-                  callbacks=[metrics, checkpoint], 
+                  callbacks=[metrics], 
                   shuffle=False)  
         
-
         self._train_report = metrics.train_reporter
         self._validation_report = metrics.val_reporter
+
+        self._dao.save_keras(self.name, model)

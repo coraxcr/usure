@@ -21,13 +21,21 @@ def plot_learning_curves(train_metrics:MetricsReporter, val_metrics:MetricsRepor
     plt.show()
 
 
-def print_metrics(train_metrics:MetricsReporter, val_metrics:MetricsReporter):
-    data ={
-        "tra acc": train_metrics.accuracies,
-        "val acc": val_metrics.accuracies,
-        "tra loss": train_metrics.losses,
-        "val loss": val_metrics.losses,
-    }
+def print_metrics(train_metrics:MetricsReporter, val_metrics:MetricsReporter, only_last=False):
+    if only_last:
+        data ={
+            "tra acc": [train_metrics.accuracies[-1]],
+            "val acc": [val_metrics.accuracies[-1]],
+            "tra loss": [train_metrics.losses[-1]],
+            "val loss": [val_metrics.losses[-1]],
+        }
+    else:
+        data ={
+            "tra acc": train_metrics.accuracies,
+            "val acc": val_metrics.accuracies,
+            "tra loss": train_metrics.losses,
+            "val loss": val_metrics.losses,
+        }        
     df = pd.DataFrame(data)
     print(df.to_string(float_format=lambda n: format(n, '#.2g'), justify="right"))
 

@@ -4,5 +4,6 @@ persistence:
       preprocessed: data_test/preprocessed
       embeddings: data_test/embeddings
       classification: data_test/classification
+      models: data_test/classification/models
       logs: data_test/logs
       assets:  data_test/assets

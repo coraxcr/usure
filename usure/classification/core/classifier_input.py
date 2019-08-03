@@ -7,9 +7,9 @@ from sklearn.model_selection import train_test_split
 from .wordvectors import WordVectors
 from .labeled_comments import LabeledComments
 
-np.random.seed(5)
-import tensorflow as tf 
-tf.set_random_seed(5)
+#np.random.seed(5)
+#import tensorflow as tf 
+#tf.set_random_seed(5)
 
 class ClassifierInput:
 
@@ -40,8 +40,9 @@ class ClassifierInput:
     def x(self):
         return self._x
     
+    @property 
     def x_mean(self):
-        return [np.mean(np.array([self.embedding_matrix[word_index] for word_index in comment]), axis=0) for comment in self.x]
+        return self._x_mean
     
     @property 
     def y(self):
@@ -52,13 +53,14 @@ class ClassifierInput:
         return self._categories
 
     def train_val_split(self, x, y, val_size=0.1):
-        return train_test_split(x, y, test_size=val_size, random_state=42, shuffle=False)
+        return train_test_split(x, y, test_size=val_size, random_state=42, shuffle=True)
 
     def _set_properties(self):
         self._comment_max_length = len(max(self._labeled_comments.comments, key=lambda comment: len(comment.split())).split()) + 5
         self._vocab_size = len(self._tokenizer.index_word)+1
         self._embedding_matrix = self._create_embedding_matrix(self._tokenizer, self._wv)
         self._x = self._convert_to_padded_sequences(self._tokenizer, self._labeled_comments.comments, self._comment_max_length)
+        self._x_mean = [np.mean(np.array([self.embedding_matrix[word_index] for word_index in comment]), axis=0) for comment in self._x]
         self._y, self._categories = self._map_to_integers(self._labeled_comments.labels)
         
     def _map_to_integers(self, labels:Iterable[str]):

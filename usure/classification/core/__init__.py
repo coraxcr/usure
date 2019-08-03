@@ -8,3 +8,4 @@ from .svm_lab import SvmLab
 from .metrics_reporter import MetricsReporter
 from .metrics_keras_callback import MetricsKerasCallback
 from .classifier_input import ClassifierInput
+from .model_dao import ModelDao
