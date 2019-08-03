@@ -5,7 +5,8 @@ from .labeled_comments import LabeledComments
 from .labeled_comments_dao import LabeledCommentsDao
 from .cnn_lab import CnnLab
 from .svm_lab import SvmLab
-from .metrics_reporter import MetricsReporter
+from .metrics import Metrics
+from .classifier_lab import ClassifierLab, LabReport
 from .metrics_keras_callback import MetricsKerasCallback
 from .classifier_input import ClassifierInput
 from .model_dao import ModelDao

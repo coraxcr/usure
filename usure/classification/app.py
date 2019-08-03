@@ -4,9 +4,10 @@ from usure.classification.infrastructure import (
      BasicSentenceCleaner 
     ,FileLabeledCommentsDao
     ,FileWordVectorsRep)
-from usure.classification.core import CnnLab, SvmLab, ClassifierInput
-from usure.classification.ui import utils
+from usure.classification.core import CnnLab, ClassifierInput, LabReport
+#from usure.classification.ui import utils
 from usure.classification.infrastructure import FileModelDao
+
 
 class App:
 
@@ -18,13 +19,14 @@ class App:
     def do(self):
         labeledcomments = self._commentsdao.get("intertass-CR-train-tagged.xml")
 
-        wv = self._wvrep.get("CorpusFBCR2013.txt.usu.bw.kvs")
+        wv = self._wvrep.get("tweets.txt.usu.sw.kvs")
         input = ClassifierInput(labeledcomments, wv)
         dao = FileModelDao(config.models)
         #wvs = self._wvrep.get_all()
         #for wv in wvs:
-        classifier = SvmLab(input, dao)
-        utils.print_metrics(classifier.train_report, classifier.validation_report, only_last=True)
+        lab = CnnLab(input, dao)
+        labreport = lab.train_by_stratifiedkfold()
+        print(labreport.sumary.to_string())
 
 if __name__ == "__main__":
     usurelogging.config(config.logs, "classification.log")

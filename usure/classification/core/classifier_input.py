@@ -3,7 +3,7 @@ import numpy as np
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
 from sklearn.preprocessing import LabelEncoder, LabelBinarizer
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, StratifiedKFold
 from .wordvectors import WordVectors
 from .labeled_comments import LabeledComments
 
@@ -54,6 +54,13 @@ class ClassifierInput:
 
     def train_val_split(self, x, y, val_size=0.1):
         return train_test_split(x, y, test_size=val_size, random_state=42, shuffle=True)
+
+    def train_val_stratifiedkfold(self, x, y, folds=10):
+        kf = StratifiedKFold(n_splits=folds, shuffle=True)
+        for train_indexes, validation_indexes in kf.split(x, y):
+            x_train, x_val = x[train_indexes], x[validation_indexes]
+            y_train, y_val = y[train_indexes], y[validation_indexes]
+            yield x_train, x_val, y_train, y_val
 
     def _set_properties(self):
         self._comment_max_length = len(max(self._labeled_comments.comments, key=lambda comment: len(comment.split())).split()) + 5
