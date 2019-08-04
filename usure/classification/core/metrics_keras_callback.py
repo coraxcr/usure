@@ -5,7 +5,7 @@ from sklearn.metrics import f1_score
 from keras.callbacks import Callback
 from keras.models import Model
 import numpy as np
-from .classifier_lab import LabReport
+from .classifier_lab import LabReport, ModelReport
 from .metrics import Metrics
 
 class MetricsKerasCallback(Callback):
@@ -18,13 +18,23 @@ class MetricsKerasCallback(Callback):
         self._y_val = y_val
         self._categories = categories
         self._lab_report = lab_report
-    
+        self ._epochs = []
+
+    def on_epoch_end(self, epoch, logs):
+        model_report = self._create_model_report()
+        self._epochs.append(model_report)
+ 
     def on_train_end(self, logs={}):
-        train_prediction = self._predict(self._x_train, self.model)
-        val_prediction = self._predict(self._x_val, self.model)
-        training_metrics = Metrics.create(self._y_train, train_prediction[0], train_prediction[1], self._categories)
-        validation_metrics = Metrics.create(self._y_val, val_prediction[0], val_prediction[1], self._categories)
-        self._lab_report.add(self._modelname,training_metrics, validation_metrics)
+        model_report = self._create_model_report()
+        model_report.epochs = self._epochs
+        self._lab_report.add(model_report)
+
+    def _create_model_report(self) -> ModelReport:
+        model_report = ModelReport.create(self._modelname, 
+            self._categories,
+            lambda x: self._predict(x, self.model),
+            self._x_train, self._x_val, self._y_train, self._y_val)
+        return model_report
 
     def _predict(self, x, model:Model):
         y_pred = model.predict(x)

@@ -2,9 +2,11 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
 from sklearn.metrics import log_loss
 from sklearn.metrics import confusion_matrix
+from sklearn.metrics import f1_score
 from typing import Iterable
 import pandas as pd
-
+import warnings
+warnings.filterwarnings('ignore')
 
 class Metrics:
 
@@ -19,6 +21,10 @@ class Metrics:
     def loss(self) -> float:
         return self._loss
 
+    #@property
+    #def f1_score(self) -> float:
+    #    return self._f1_score 
+
     @property 
     def classification_report(self) ->str:
         return self._classification_report
@@ -30,6 +36,7 @@ class Metrics:
     def _set_metrics(self, y_true, y_pred, raw_y_pred, categories):
         self._accuracy = accuracy_score(y_true, y_pred)
         self._loss = log_loss(y_true, raw_y_pred)
+        #self._f1_score = f1_score(y_true, y_pred, average="samples")
         self._classification_report = classification_report(y_true, y_pred, target_names=categories)
         self._confusion_matrix = self._format_confusion_matrix(confusion_matrix(y_true, y_pred), categories)
 

@@ -4,7 +4,7 @@ from usure.classification.infrastructure import (
      BasicSentenceCleaner 
     ,FileLabeledCommentsDao
     ,FileWordVectorsRep)
-from usure.classification.core import CnnLab, ClassifierInput, LabReport
+from usure.classification.core import CnnLab, SvmLab, ClassifierInput, LabReport
 #from usure.classification.ui import utils
 from usure.classification.infrastructure import FileModelDao
 
@@ -24,7 +24,7 @@ class App:
         dao = FileModelDao(config.models)
         #wvs = self._wvrep.get_all()
         #for wv in wvs:
-        lab = CnnLab(input, dao)
+        lab = SvmLab(input, dao)
         labreport = lab.train_by_stratifiedkfold()
         print(labreport.sumary.to_string())
 

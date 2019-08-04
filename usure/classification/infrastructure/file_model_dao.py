@@ -12,20 +12,23 @@ class FileModelDao(ModelDao):
         self._folderpath = folderpath
 
     def save_keras(self, name:str, model:Model):
+        name = f"{name}.h5"
         fullpath = fileutils.join(self._folderpath, name)
         model.save(fullpath, overwrite=True)
 
     def save_sklearn(self, name:str, model:SVC):
+        name = f"{name}.joblib"
         fullpath = fileutils.join(self._folderpath, name)
         joblib.dump(model, fullpath) 
 
-
     def get_keras(self, name:str) -> Model:
+        name = f"{name}.h5"
         fullpath = fileutils.join(self._folderpath, name)
         model = load_model(fullpath, compile=True)
         return model
 
     def get_sklearn(self, name:str) -> SVC:
+        name = f"{name}.joblib"
         fullpath = fileutils.join(self._folderpath, name)
         model = joblib.load(fullpath)
         return model

@@ -2,7 +2,6 @@ import keras
 from keras.layers import Conv1D, GlobalMaxPooling1D, Input, Dense, concatenate, Activation, Dropout
 from keras.models import Model
 from keras.layers.embeddings import Embedding
-import uuid
 #import numpy as np 
 #import tensorflow as tf 
 from .classifier_input import ClassifierInput
@@ -23,9 +22,9 @@ class CnnLab(ClassifierLab):
     def train_by_stratifiedkfold(self) -> LabReport:
         input = self._input
         labreport = LabReport.create()
-        for x_train, x_val, y_train, y_val in input.train_val_stratifiedkfold(input.x, input.y, folds = 5):
-            model = self._create_model(input)   
-            modelname = uuid.uuid4().hex
+        for x_train, x_val, y_train, y_val in input.train_val_stratifiedkfold(input.x, input.y):
+            model = self.create_model(input)   
+            modelname = self.get_an_id()
             metrics_callback = MetricsKerasCallback.create(modelname, x_train, y_train, x_val, y_val, input.categories, labreport)
             model.fit(x_train, 
                     y_train, 
@@ -38,7 +37,7 @@ class CnnLab(ClassifierLab):
             self._dao.save_keras(modelname, model)
         return labreport
 
-    def _create_model(self, input:ClassifierInput):
+    def create_model(self, input:ClassifierInput):
             input_comments = Input(shape=(input.comment_max_length,), dtype='int32')
             comment_encoder = Embedding(input.vocab_size, 300, weights=[input.embedding_matrix], input_length=input.comment_max_length, trainable=False)(input_comments)
             bigram_branch = Conv1D(filters=100, kernel_size=2, padding='valid', activation='relu', strides=1)(comment_encoder)

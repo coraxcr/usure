@@ -2,7 +2,7 @@ import os
 import matplotlib.pyplot as plt
 from matplotlib import markers 
 import pandas as pd
-from usure.classification.core import MetricsReporter
+from usure.classification.core import Metrics, LabReport
 
 
 def plot_learning_curves(train_metrics:MetricsReporter, val_metrics:MetricsReporter):
