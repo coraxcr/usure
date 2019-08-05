@@ -91,6 +91,10 @@ class ClassifierLab:
     def create_model(self, input:ClassifierInput):
         pass
 
+    @abstractmethod
+    def test(self, input:ClassifierInput) -> Metrics:
+        pass
+
     def get_an_id(self):
         return uuid.uuid4().hex
 

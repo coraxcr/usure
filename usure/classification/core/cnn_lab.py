@@ -2,6 +2,7 @@ import keras
 from keras.layers import Conv1D, GlobalMaxPooling1D, Input, Dense, concatenate, Activation, Dropout
 from keras.models import Model
 from keras.layers.embeddings import Embedding
+import numpy as np
 #import numpy as np 
 #import tensorflow as tf 
 from .classifier_input import ClassifierInput
@@ -39,7 +40,7 @@ class CnnLab(ClassifierLab):
 
     def create_model(self, input:ClassifierInput):
             input_comments = Input(shape=(input.comment_max_length,), dtype='int32')
-            comment_encoder = Embedding(input.vocab_size, 300, weights=[input.embedding_matrix], input_length=input.comment_max_length, trainable=False)(input_comments)
+            comment_encoder = Embedding(input_dim=input.vocab_size, output_dim=300, input_length=input.comment_max_length, weights=[input.embedding_matrix], trainable=False)(input_comments)
             bigram_branch = Conv1D(filters=100, kernel_size=2, padding='valid', activation='relu', strides=1)(comment_encoder)
             bigram_branch = GlobalMaxPooling1D()(bigram_branch)
             trigram_branch = Conv1D(filters=100, kernel_size=3, padding='valid', activation='relu', strides=1)(comment_encoder)
@@ -57,3 +58,12 @@ class CnnLab(ClassifierLab):
                         metrics=[keras.metrics.sparse_categorical_accuracy]
             )
             return model
+
+    def test(self, modelname:str, input:ClassifierInput) -> Metrics:
+        model = self._dao.get_keras(modelname)
+        #model.layers
+        y_pred = model.predict(input.x)
+        y_pred_sparsed = np.argmax(y_pred, axis=1)
+        metrics = Metrics.create(input.y, y_pred_sparsed, y_pred, input.categories)
+        return metrics
+        
