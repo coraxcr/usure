@@ -19,10 +19,10 @@ class CnnLab(ClassifierLab):
     def __init__(self, input:ClassifierInput, dao: ModelDao):
         super().__init__(input, dao)
 
-    def train_by_stratifiedkfold(self) -> LabReport:
+    def train_by_stratifiedkfold(self, folds=10) -> LabReport:
         input = self._input
         labreport = LabReport.create()
-        for x_train, x_val, y_train, y_val in input.train_val_stratifiedkfold(input.x, input.y):
+        for x_train, x_val, y_train, y_val in input.train_val_stratifiedkfold(input.x, input.y, folds=folds):
             model = self.create_model(input)   
             modelname = self.get_an_id()
             metrics_callback = MetricsKerasCallback.create(modelname, x_train, y_train, x_val, y_val, input.categories, labreport)

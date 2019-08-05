@@ -63,14 +63,14 @@ class LabReport:
         return self._model_reports
 
     @property 
-    def sumary(self) -> pd.DataFrame:
-        sumary = {
+    def summary(self) -> pd.DataFrame:
+        summary = {
             "tra_acc_mean" : [statistics.mean(list(map(lambda model_report: model_report.training.accuracy, self._model_reports)))],
             "val_acc_mean" : [statistics.mean(list(map(lambda model_report: model_report.validation.accuracy, self._model_reports)))],
             "tra_acc_stdev" : [statistics.stdev(list(map(lambda model_report: model_report.training.accuracy, self._model_reports)))],
             "val_acc_stdev" : [statistics.stdev(list(map(lambda model_report: model_report.validation.accuracy, self._model_reports)))]
         }
-        return pd.DataFrame(sumary)
+        return pd.DataFrame(summary)
 
     def add(self, model_report:ModelReport):
         self._model_reports.append(model_report)
@@ -84,7 +84,7 @@ class ClassifierLab:
         self._dao = dao
 
     @abstractmethod 
-    def train_by_stratifiedkfold(self) -> LabReport:
+    def train_by_stratifiedkfold(self, folds=10) -> LabReport:
         pass
     
     @abstractmethod
