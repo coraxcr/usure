@@ -14,6 +14,9 @@ class FileLabeledCommentsDao(LabeledCommentsDao):
         comments = self._get_from_xml(name)
         return comments
 
+    def save(self, labeled_comments : LabeledComments):
+        raise NotImplementedError()
+
     def get_chunks(self, name, *percentages) -> Iterable[LabeledComments]:
         assert sum(percentages) == 100, "Arguments total must be 100%"
         comments = self._get_from_xml(name)

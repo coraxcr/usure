@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Iterable, Any
 import os
 import numpy as np
 from sklearn import svm
@@ -29,6 +29,18 @@ class SvmLab(ClassifierLab):
             self._dao.save_sklearn(modelname, model)
 
         return labreport
+
+    def test(self, modelname:str, input:ClassifierInput) -> Metrics:
+        model = self._dao.get_sklearn(modelname)
+        y_pred_sparsed, y_pred = _predict(input.x, model)
+        metrics = Metrics.create(input.y, y_pred_sparsed, y_pred, input.categories)
+        return metrics
+
+    def predict(self, modelname, input:ClassifierInput) -> Iterable[Any]:
+        model = self._dao.get_sklearn(modelname)
+        y_pred_sparsed, y_pred = _predict(input.x, model)
+        labeled_predictions = np.array([input.categories[index] for index in y_pred_sparsed], dtype=object)
+        return labeled_predictions
     
     def _predict(self, x, model:svm.SVC):
         y_pred =  model.predict_proba(x)

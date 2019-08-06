@@ -9,11 +9,19 @@ class ModelDao:
         pass
 
     @abstractclassmethod
-    def save_sklearn(name:str, model:SVC):
+    def get_keras(name:str) -> Model:
         pass
 
     @abstractclassmethod
-    def get_keras(name:str) -> Model:
+    def save_keras_weights(name:str, model:Model):
+        pass
+
+    @abstractclassmethod
+    def get_keras_weights(name:str, model:Model):
+        pass
+
+    @abstractclassmethod
+    def save_sklearn(name:str, model:SVC):
         pass
 
     @abstractclassmethod

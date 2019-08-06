@@ -13,7 +13,9 @@ from .labeled_comments import LabeledComments
 
 class ClassifierInput:
 
-    def __init__(self, labeled_comments:LabeledComments, wv:WordVectors):
+    def __init__(self, labeled_comments:LabeledComments, wv:WordVectors, categories=None):
+        """categories: only valid if labeled comments does not have labels."""
+        self._categories = categories
         self._labeled_comments = labeled_comments
         self._wv = wv
         self._tokenizer = Tokenizer()
@@ -73,6 +75,8 @@ class ClassifierInput:
     def _map_to_integers(self, labels:Iterable[str]):
         label_encoder = LabelEncoder()
         integer_encoded = label_encoder.fit_transform(labels)
+        if self._categories:
+            return integer_encoded, self._categories
         return integer_encoded, label_encoder.classes_
 
     def _create_embedding_matrix(self, tokenizer:Tokenizer, wv:WordVectors):

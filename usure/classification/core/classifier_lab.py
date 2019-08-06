@@ -1,6 +1,6 @@
 import uuid
 from abc import ABC, abstractmethod
-from typing import Iterable
+from typing import Iterable, Any
 import statistics
 import pandas as pd
 from .classifier_input import ClassifierInput
@@ -65,9 +65,9 @@ class LabReport:
     @property 
     def summary(self) -> pd.DataFrame:
         summary = {
-            "tra_acc_mean" : [statistics.mean(list(map(lambda model_report: model_report.training.accuracy, self._model_reports)))],
+            "train_acc_mean" : [statistics.mean(list(map(lambda model_report: model_report.training.accuracy, self._model_reports)))],
+            "train_acc_stdev" : [statistics.stdev(list(map(lambda model_report: model_report.training.accuracy, self._model_reports)))],           
             "val_acc_mean" : [statistics.mean(list(map(lambda model_report: model_report.validation.accuracy, self._model_reports)))],
-            "tra_acc_stdev" : [statistics.stdev(list(map(lambda model_report: model_report.training.accuracy, self._model_reports)))],
             "val_acc_stdev" : [statistics.stdev(list(map(lambda model_report: model_report.validation.accuracy, self._model_reports)))]
         }
         return pd.DataFrame(summary)
@@ -94,6 +94,10 @@ class ClassifierLab:
     @abstractmethod
     def test(self, input:ClassifierInput) -> Metrics:
         pass
+
+    @abstractmethod
+    def predict(modelname, input:ClassifierInput) -> Iterable[Any]:
+         pass
 
     def get_an_id(self):
         return uuid.uuid4().hex

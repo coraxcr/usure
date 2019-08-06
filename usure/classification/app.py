@@ -16,19 +16,19 @@ class App:
         self._wvrep = FileWordVectorsRep(config.embeddings)
     
     def do(self):
-        labeledcomments = self._commentsdao.get("intertass-CR-train-tagged.xml")
+        labeledcomments = self._commentsdao.get("intertass-CR-train-tagged.xml") #intertass-CR-test
 
         wv = self._wvrep.get("CorpusFBCR2013.txt.usu.sw.kvs")
         input = ClassifierInput(labeledcomments, wv)
         model_dao = FileModelDao(config.models)
         lab = CnnLab(input, model_dao)
-        labreport = lab.train_by_stratifiedkfold()
-        print(labreport.summary.to_string())
+        #labreport = lab.train_by_stratifiedkfold()
+        #print(labreport.summary.to_string())
         #df = ui.model_reports_to_DataFrame(labreport.model_reports)
         #print(df.to_string())
         
-        #metrics = lab.test("21e961074d91405f935d77fd6621a1ef", input)
-        #print(metrics.accuracy)
+        metrics = lab.test("020863a7b1ef4ba1a3e95e91d2d0dd51", input)
+        print(metrics.accuracy)
 
 if __name__ == "__main__":
     usurelogging.config(config.logs, "classification.log")
