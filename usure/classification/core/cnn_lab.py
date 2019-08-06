@@ -1,7 +1,6 @@
 import keras
 from keras.layers import Conv1D, GlobalMaxPooling1D, Input, Dense, concatenate, Activation, Dropout
-from keras.models import Model
-from keras.layers.embeddings import Embedding
+from keras.models import Model, Sequential
 import numpy as np
 from typing import Iterable, Any
 #import numpy as np 
@@ -24,7 +23,7 @@ class CnnLab(ClassifierLab):
     def train_by_stratifiedkfold(self, folds=10) -> LabReport:
         input = self._input
         labreport = LabReport.create()
-        for x_train, x_val, y_train, y_val in input.train_val_stratifiedkfold(input.x, input.y, folds=folds):
+        for x_train, x_val, y_train, y_val in input.train_val_stratifiedkfold(input.x_embedded, input.y, folds=folds):
             model = self.create_model(input)   
             modelname = self.get_an_id()
             metrics_callback = MetricsKerasCallback.create(modelname, x_train, y_train, x_val, y_val, input.categories, labreport)
@@ -41,25 +40,27 @@ class CnnLab(ClassifierLab):
 
     def create_model(self, input:ClassifierInput):
         
-            input_comments = Input(shape=(input.comment_max_length,), dtype='int32')
-            comment_encoder = Embedding(input_dim=input.vocab_size, output_dim=300, input_length=input.comment_max_length, weights=[input.embedding_matrix], trainable=False)(input_comments)
-            bigram_branch = Conv1D(filters=100, kernel_size=2, padding='valid', activation='relu', strides=1)(comment_encoder)
-            bigram_branch = GlobalMaxPooling1D()(bigram_branch)
-            trigram_branch = Conv1D(filters=100, kernel_size=3, padding='valid', activation='relu', strides=1)(comment_encoder)
-            trigram_branch = GlobalMaxPooling1D()(trigram_branch)
-            fourgram_branch = Conv1D(filters=100, kernel_size=4, padding='valid', activation='relu', strides=1)(comment_encoder)
-            fourgram_branch = GlobalMaxPooling1D()(fourgram_branch)
-            merged = concatenate([bigram_branch, trigram_branch, fourgram_branch], axis=1)
-            merged = Dense(256, activation='relu')(merged)
-            merged = Dropout(0.5)(merged)
-            merged = Dense(4)(merged)
-            output = Activation('softmax')(merged)
-            model = Model(inputs=[input_comments], outputs=[output])
-            model.compile(loss='sparse_categorical_crossentropy', 
-                        optimizer='adam', 
-                        metrics=[keras.metrics.sparse_categorical_accuracy]
-            )
-            return model
+        #input.comment_max_length
+        input_comments = Input(shape=(20,300), dtype='float')
+
+        bigram_branch = Conv1D(filters=100, kernel_size=2, padding='valid', activation='relu', strides=1)(input_comments)
+        bigram_branch = GlobalMaxPooling1D()(bigram_branch)
+        trigram_branch = Conv1D(filters=100, kernel_size=3, padding='valid', activation='relu', strides=1)(input_comments)
+        trigram_branch = GlobalMaxPooling1D()(trigram_branch)
+        fourgram_branch = Conv1D(filters=100, kernel_size=4, padding='valid', activation='relu', strides=1)(input_comments)
+        fourgram_branch = GlobalMaxPooling1D()(fourgram_branch)
+        merged = concatenate([bigram_branch, trigram_branch, fourgram_branch], axis=1)
+        merged = Dense(256, activation='relu')(merged)
+        merged = Dropout(0.5)(merged)
+        merged = Dense(4)(merged)
+        output = Activation('softmax')(merged)
+        model = Model(inputs=[input_comments], outputs=[output])        
+        model.compile(loss='sparse_categorical_crossentropy', 
+                    optimizer='adam', 
+                    metrics=[keras.metrics.sparse_categorical_accuracy]
+        )
+
+        return model
 
     def test(self, modelname:str, input:ClassifierInput) -> Metrics:
         model = self.create_model(input)

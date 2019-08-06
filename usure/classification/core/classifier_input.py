@@ -41,6 +41,10 @@ class ClassifierInput:
     @property 
     def x(self):
         return self._x
+
+    @property
+    def x_embedded(self):
+        return self._x_embedded
     
     @property 
     def x_mean(self):
@@ -69,6 +73,7 @@ class ClassifierInput:
         self._vocab_size = len(self._tokenizer.index_word)+1
         self._embedding_matrix = self._create_embedding_matrix(self._tokenizer, self._wv)
         self._x = self._convert_to_padded_sequences(self._tokenizer, self._labeled_comments.comments, self._comment_max_length)
+        self._x_embedded = np.array([[self._embedding_matrix[word] for word in line] for line in self._x])
         self._x_mean = [np.mean(np.array([self.embedding_matrix[word_index] for word_index in comment]), axis=0) for comment in self._x]
         self._y, self._categories = self._map_to_integers(self._labeled_comments.labels)
         
