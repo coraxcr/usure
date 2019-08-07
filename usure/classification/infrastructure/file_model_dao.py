@@ -42,3 +42,4 @@ class FileModelDao(ModelDao):
         name = f"{name}.joblib"
         fullpath = fileutils.join(self._folderpath, name)
         model = joblib.load(fullpath)
+        return model

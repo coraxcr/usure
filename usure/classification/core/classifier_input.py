@@ -1,103 +1,59 @@
 from typing import Iterable
 import numpy as np
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing import sequence
-from sklearn.preprocessing import LabelEncoder, LabelBinarizer
-from sklearn.model_selection import train_test_split, StratifiedKFold
-from .wordvectors import WordVectors
+from sklearn.preprocessing import LabelEncoder
 from .labeled_comments import LabeledComments
+from .wordvectors_service import WordVectorsService
 
-#np.random.seed(5)
-#import tensorflow as tf 
-#tf.set_random_seed(5)
 
 class ClassifierInput:
 
-    def __init__(self, labeled_comments:LabeledComments, wv:WordVectors, categories=None):
+    def __init__(self, labeled_comments:LabeledComments, wv_service:WordVectorsService, categories=[]):
         """categories: only valid if labeled comments does not have labels."""
-        self._categories = categories
         self._labeled_comments = labeled_comments
-        self._wv = wv
-        self._tokenizer = Tokenizer()
-        self._tokenizer.fit_on_texts(self._labeled_comments.comments)
-        self._set_properties()
-
-    @property
-    def vocab_size(self):
-        return self._vocab_size
-
-    @property
-    def comment_max_length(self):
-        return self._comment_max_length
-
-    @property 
-    def embedding_matrix(self):
-        return self._embedding_matrix
+        self._wv_service = wv_service
+        self._categories = categories
+        self._x_vectorized = None
+        self._x_mean = None
+        self._y_indexes = None
 
     @property
     def embeddings_name(self):
-        return self._wv.name
-
-    @property 
-    def x(self):
-        return self._x
+        return self._wv_service.name
 
     @property
-    def x_embedded(self):
-        return self._x_embedded
-    
-    @property 
-    def x_mean(self):
-        return self._x_mean
-    
-    @property 
-    def y(self):
-        return self._y
-    
+    def comment_max_length(self):
+        return 20
+
+    @property
+    def vector_size(self):
+        return self._wv_service.vector_size
+
     @property 
     def categories(self):
+        if not any(self._categories):
+            label_encoder = LabelEncoder()
+            label_encoder.fit_transform(self._labeled_comments.labels)
+            self._categories = label_encoder.classes_
         return self._categories
 
-    def train_val_split(self, x, y, val_size=0.1):
-        return train_test_split(x, y, test_size=val_size, random_state=42, shuffle=True)
-
-    def train_val_stratifiedkfold(self, x, y, folds=10):
-        kf = StratifiedKFold(n_splits=folds, shuffle=True)
-        for train_indexes, validation_indexes in kf.split(x, y):
-            x_train, x_val = x[train_indexes], x[validation_indexes]
-            y_train, y_val = y[train_indexes], y[validation_indexes]
-            yield x_train, x_val, y_train, y_val
-
-    def _set_properties(self):
-        self._comment_max_length = len(max(self._labeled_comments.comments, key=lambda comment: len(comment.split())).split()) + 5
-        self._vocab_size = len(self._tokenizer.index_word)+1
-        self._embedding_matrix = self._create_embedding_matrix(self._tokenizer, self._wv)
-        self._x = self._convert_to_padded_sequences(self._tokenizer, self._labeled_comments.comments, self._comment_max_length)
-        self._x_embedded = np.array([[self._embedding_matrix[word] for word in line] for line in self._x])
-        self._x_mean = [np.mean(np.array([self.embedding_matrix[word_index] for word_index in comment]), axis=0) for comment in self._x]
-        self._y, self._categories = self._map_to_integers(self._labeled_comments.labels)
-        
-    def _map_to_integers(self, labels:Iterable[str]):
-        label_encoder = LabelEncoder()
-        integer_encoded = label_encoder.fit_transform(labels)
-        if self._categories:
-            return integer_encoded, self._categories
-        return integer_encoded, label_encoder.classes_
-
-    def _create_embedding_matrix(self, tokenizer:Tokenizer, wv:WordVectors):
-        embedding_matrix = np.zeros((len(tokenizer.index_word)+1, 300))
-        for word, i in tokenizer.word_index.items():
-            if word in wv.wordvectors:
-                embedding_matrix[i] = wv.wordvectors[word]
-        return embedding_matrix
-
-    def _convert_to_padded_sequences(self, tokenizer:Tokenizer, sentences:Iterable[str], sequence_max_length:int):
-        sequences = tokenizer.texts_to_sequences(sentences)
-        padded_sequences = sequence.pad_sequences(sequences, maxlen=sequence_max_length)
-        return padded_sequences
-
-    def _map_to_one_hot_labels(self, labels:Iterable[str]):
-        lb = LabelBinarizer()
-        lb.fit(labels)
-        one_hot =  lb.transform(labels)
-        return one_hot, lb.classes_
+    @property
+    def x_vectorized(self):
+        if not self._x_vectorized:
+            no_texts = len(self._labeled_comments.comments)
+            padded_texts = self._wv_service.texts_to_padded_vectors(self.comment_max_length,
+                self._labeled_comments.comments)
+            self._x_vectorized = padded_texts
+        return self._x_vectorized
+    
+    @property 
+    def x_vectorized_mean(self):
+        if not self._x_mean:
+            self._x_vectorized_mean = [np.mean(np.array(comment, dtype=float), axis=0) for comment in self.x_vectorized]
+        return np.array(self._x_vectorized_mean)
+    
+    @property 
+    def y_indexes(self):
+        if not self._y_indexes:
+            label_encoder = LabelEncoder()
+            self._y_indexes = label_encoder.fit_transform(self._labeled_comments.labels)
+        return np.array(self._y_indexes, dtype=int)

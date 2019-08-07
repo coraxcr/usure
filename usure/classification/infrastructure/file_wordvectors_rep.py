@@ -1,5 +1,6 @@
 from typing import Iterable
 from gensim.models import KeyedVectors
+import numpy as np
 from usure.classification.core import WordVectors, WordVectorsRep
 from usure.wordvectors.infrastructure import FileKeyedVectorsRep
 
@@ -20,6 +21,6 @@ class FileWordVectorsRep(WordVectorsRep):
         return wsvs
 
     def _from_kvs_to_wvs(self, kvs: KeyedVectors) -> WordVectors:
-        wvs = WordVectors(kvs.name, {word: kvs.get_vector(word)
+        wvs = WordVectors(kvs.name, kvs.vector_size, {word: np.array(kvs.get_vector(word))
                                      for word, vocab in kvs.vocab.items()})
         return wvs

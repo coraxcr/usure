@@ -3,30 +3,25 @@ from keras.layers import Conv1D, GlobalMaxPooling1D, Input, Dense, concatenate, 
 from keras.models import Model, Sequential
 import numpy as np
 from typing import Iterable, Any
-#import numpy as np 
-#import tensorflow as tf 
 from .classifier_input import ClassifierInput
 from .model_dao import ModelDao
 from .metrics import Metrics
 from .metrics_keras_callback import MetricsKerasCallback
 from .classifier_lab import ClassifierLab, LabReport
-#from keras.wrappers.scikit_learn import k
-#np.random.seed(5)
-#tf.set_random_seed(5)
 
 
 class CnnLab(ClassifierLab):
 
-    def __init__(self, input:ClassifierInput, dao: ModelDao):
-        super().__init__(input, dao)
+    def __init__(self, dao: ModelDao):
+        super().__init__(dao)
 
-    def train_by_stratifiedkfold(self, folds=10) -> LabReport:
-        input = self._input
+    def train_by_stratifiedkfold(self, input:ClassifierInput, folds=10) -> LabReport:
         labreport = LabReport.create()
-        for x_train, x_val, y_train, y_val in input.train_val_stratifiedkfold(input.x_embedded, input.y, folds=folds):
-            model = self.create_model(input)   
+        for x_train, x_val, y_train, y_val in self.train_val_stratifiedkfold(input.x_vectorized, input.y_indexes, folds=folds):
+            model = self.create_model()   
             modelname = self.get_an_id()
             metrics_callback = MetricsKerasCallback.create(modelname, x_train, y_train, x_val, y_val, input.categories, labreport)
+            
             model.fit(x_train, 
                     y_train, 
                     batch_size=32,
@@ -35,14 +30,14 @@ class CnnLab(ClassifierLab):
                     callbacks=[metrics_callback], 
                     shuffle=False,
                     verbose=False)
-            self._dao.save_keras_weights(modelname, model)
+
+            self._dao.save_keras(modelname, model)
         return labreport
 
-    def create_model(self, input:ClassifierInput):
-        
-        #input.comment_max_length
-        input_comments = Input(shape=(20,300), dtype='float')
-
+    def create_model(self):
+        comment_max_length = 20
+        vector_size = 300
+        input_comments = Input(shape=(comment_max_length, vector_size), dtype='float')
         bigram_branch = Conv1D(filters=100, kernel_size=2, padding='valid', activation='relu', strides=1)(input_comments)
         bigram_branch = GlobalMaxPooling1D()(bigram_branch)
         trigram_branch = Conv1D(filters=100, kernel_size=3, padding='valid', activation='relu', strides=1)(input_comments)
@@ -51,7 +46,7 @@ class CnnLab(ClassifierLab):
         fourgram_branch = GlobalMaxPooling1D()(fourgram_branch)
         merged = concatenate([bigram_branch, trigram_branch, fourgram_branch], axis=1)
         merged = Dense(256, activation='relu')(merged)
-        merged = Dropout(0.5)(merged)
+        merged = Dropout(0.45)(merged)
         merged = Dense(4)(merged)
         output = Activation('softmax')(merged)
         model = Model(inputs=[input_comments], outputs=[output])        
@@ -59,21 +54,18 @@ class CnnLab(ClassifierLab):
                     optimizer='adam', 
                     metrics=[keras.metrics.sparse_categorical_accuracy]
         )
-
         return model
 
-    def test(self, modelname:str, input:ClassifierInput) -> Metrics:
-        model = self.create_model(input)
-        model = self._dao.get_keras_weights(modelname, model)
-        y_pred = model.predict(input.x)
+    def test(self, model_name:str, test_input:ClassifierInput) -> Metrics:
+        model = self._dao.get_keras(model_name)
+        y_pred = model.predict(test_input.x_vectorized)
         y_pred_sparsed = np.argmax(y_pred, axis=1)
-        metrics = Metrics.create(input.y, y_pred_sparsed, y_pred, input.categories)
+        metrics = Metrics.create(test_input.y_indexes, y_pred_sparsed, y_pred, test_input.categories)
         return metrics
 
-    def predict(self, modelname, input:ClassifierInput) -> Iterable[Any]:
-        model = self.create_model(input)
-        model = self._dao.get_keras_weights(modelname, model)
-        y_pred = model.predict(input.x)
+    def predict(self, model_name, input:ClassifierInput) -> Iterable[str]:
+        model = self._dao.get_keras(model_name)
+        y_pred = model.predict(input.x_tokenized)
         y_pred_sparsed = np.argmax(y_pred, axis=1)
         labeled_predictions = np.array([input.categories[index] for index in y_pred_sparsed], dtype=object)
         return labeled_predictions

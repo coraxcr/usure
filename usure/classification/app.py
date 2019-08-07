@@ -4,9 +4,10 @@ from usure.classification.infrastructure import (
      BasicSentenceCleaner 
     ,FileLabeledCommentsDao
     ,FileWordVectorsRep)
-from usure.classification.core import CnnLab, SvmLab, ClassifierInput, LabReport
+from usure.classification.core import CnnLab, SvmLab, ClassifierInput, LabReport, WordVectorsService
 from usure.classification.infrastructure import FileModelDao
 import usure.classification.ui.utils as ui
+
 
 class App:
 
@@ -19,16 +20,17 @@ class App:
         labeledcomments = self._commentsdao.get("intertass-CR-train-tagged.xml") #intertass-CR-test
 
         wv = self._wvrep.get("CorpusFBCR2013.txt.usu.sw.kvs")
-        input = ClassifierInput(labeledcomments, wv)
+        wv_service = WordVectorsService(wv)
+        input = ClassifierInput(labeledcomments, wv_service)
         model_dao = FileModelDao(config.models)
-        lab = CnnLab(input, model_dao)
-        labreport = lab.train_by_stratifiedkfold()
-        print(labreport.summary.to_string())
-        df = ui.model_reports_to_DataFrame(labreport.model_reports)
-        print(df.to_string())
+        lab = SvmLab(model_dao)
+        #labreport = lab.train_by_stratifiedkfold(input)
+        #print(labreport.summary.to_string())
+        #df = ui.model_reports_to_DataFrame(labreport.model_reports)
+        #print(df.to_string())
         
-        #metrics = lab.test("020863a7b1ef4ba1a3e95e91d2d0dd51", input)
-        #print(metrics.accuracy)
+        metrics = lab.test("43e48580bc8d492da7f4402c2d803b2b", input)
+        print(metrics.accuracy)
 
 if __name__ == "__main__":
     usurelogging.config(config.logs, "classification.log")

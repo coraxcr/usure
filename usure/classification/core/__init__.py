@@ -10,3 +10,4 @@ from .classifier_lab import ClassifierLab, LabReport, ModelReport
 from .metrics_keras_callback import MetricsKerasCallback
 from .classifier_input import ClassifierInput
 from .model_dao import ModelDao
+from .wordvectors_service import WordVectorsService
