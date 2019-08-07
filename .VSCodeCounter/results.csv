@@ -1,33 +1,31 @@
 filename, language, Python, YAML, XML, jupyter, comment, blank, total
 __init__.py, Python, 0, 0, 0, 0, 0, 1, 1
 classification/__init__.py, Python, 0, 0, 0, 0, 0, 1, 1
-classification/app.py, Python, 28, 0, 0, 0, 2, 6, 36
-classification/core/__init__.py, Python, 12, 0, 0, 0, 0, 0, 12
-classification/core/classifier_input.py, Python, 73, 0, 0, 0, 3, 18, 94
-classification/core/classifier_lab.py, Python, 74, 0, 0, 0, 2, 25, 101
-classification/core/cnn_lab.py, Python, 59, 0, 0, 0, 5, 7, 71
-classification/core/embeddings_tokenizer.py, Python, 31, 0, 0, 0, 0, 15, 46
+classification/app.py, Python, 27, 0, 0, 0, 4, 7, 38
+classification/core/__init__.py, Python, 13, 0, 0, 0, 0, 0, 13
+classification/core/classifier_input.py, Python, 48, 0, 0, 0, 1, 10, 59
+classification/core/classifier_lab.py, Python, 85, 0, 0, 0, 1, 26, 112
+classification/core/cnn_lab.py, Python, 62, 0, 0, 0, 0, 10, 72
 classification/core/labeled_comments.py, Python, 19, 0, 0, 0, 0, 9, 28
-classification/core/labeled_comments_dao.py, Python, 10, 0, 0, 0, 2, 6, 18
+classification/core/labeled_comments_dao.py, Python, 12, 0, 0, 0, 1, 6, 19
 classification/core/metrics.py, Python, 38, 0, 0, 0, 4, 11, 53
 classification/core/metrics_keras_callback.py, Python, 39, 0, 0, 0, 0, 7, 46
-classification/core/model_dao.py, Python, 16, 0, 0, 0, 0, 5, 21
-classification/core/predictor.py, Python, 0, 0, 0, 0, 0, 1, 1
+classification/core/model_dao.py, Python, 22, 0, 0, 0, 0, 8, 30
 classification/core/sentence_cleaner.py, Python, 5, 0, 0, 0, 0, 4, 9
-classification/core/svm_lab.py, Python, 32, 0, 0, 0, 1, 7, 40
-classification/core/weights_dao.py, Python, 0, 0, 0, 0, 0, 1, 1
-classification/core/wordvectors.py, Python, 18, 0, 0, 0, 0, 7, 25
+classification/core/svm_lab.py, Python, 40, 0, 0, 0, 0, 8, 48
+classification/core/wordvectors.py, Python, 15, 0, 0, 0, 0, 7, 22
 classification/core/wordvectors_rep.py, Python, 8, 0, 0, 0, 0, 5, 13
+classification/core/wordvectors_service.py, Python, 34, 0, 0, 0, 0, 12, 46
 classification/infrastructure/__init__.py, Python, 5, 0, 0, 0, 0, 0, 5
 classification/infrastructure/basic_sentence_cleaner.py, Python, 9, 0, 0, 0, 0, 5, 14
-classification/infrastructure/file_labeled_comments_dao.py, Python, 27, 0, 0, 0, 0, 6, 33
-classification/infrastructure/file_model_dao.py, Python, 27, 0, 0, 0, 0, 7, 34
-classification/infrastructure/file_wordvectors_rep.py, Python, 19, 0, 0, 0, 0, 7, 26
+classification/infrastructure/file_labeled_comments_dao.py, Python, 29, 0, 0, 0, 0, 7, 36
+classification/infrastructure/file_model_dao.py, Python, 36, 0, 0, 0, 0, 9, 45
+classification/infrastructure/file_wordvectors_rep.py, Python, 20, 0, 0, 0, 0, 7, 27
 classification/infrastructure/intertass_xml_parser.py, Python, 18, 0, 0, 0, 0, 4, 22
 classification/infrastructure/tests/__init__.py, Python, 0, 0, 0, 0, 0, 1, 1
 classification/infrastructure/tests/test_file_labeled_comments_dao.py, Python, 20, 0, 0, 0, 7, 7, 34
-classification/ui/CNN Training & Validation Report.ipynb, jupyter, 0, 0, 0, 13321, 0, 1, 13322
-classification/ui/SVM Training & Validation Report.ipynb, jupyter, 0, 0, 0, 12721, 0, 1, 12722
+classification/ui/CNN Training & Validation Report.ipynb, jupyter, 0, 0, 0, 13323, 0, 1, 13324
+classification/ui/SVM Training & Validation Report.ipynb, jupyter, 0, 0, 0, 12723, 0, 1, 12724
 classification/ui/__init__.py, Python, 0, 0, 0, 0, 0, 1, 1
 classification/ui/utils.py, Python, 39, 0, 0, 0, 1, 5, 45
 common/__init__.py, Python, 0, 0, 0, 0, 0, 1, 1
@@ -108,4 +106,4 @@ wordvectors/ui/statisticsreporter.py, Python, 95, 0, 0, 0, 1, 13, 109
 wordvectors/ui/vectorization-facebook.ipynb, jupyter, 0, 0, 0, 3439, 0, 1, 3440
 wordvectors/ui/vectorization-spanish_billion_word.ipynb, jupyter, 0, 0, 0, 3427, 0, 1, 3428
 wordvectors/ui/vectorization-twitter.ipynb, jupyter, 0, 0, 0, 3426, 0, 1, 3427
-Total, -, 1730, 18, 236, 36474, 40, 610, 39108
+Total, -, 1747, 18, 236, 36478, 32, 609, 39120
