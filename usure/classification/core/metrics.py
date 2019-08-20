@@ -43,8 +43,8 @@ class Metrics:
     def _format_confusion_matrix(self, confusion_matrix, categories):
         df = pd.DataFrame(confusion_matrix.T)
         df.columns = categories
-        df.insert(0, "Pred/True", categories)
-        df.set_index('Pred/True',inplace=True)
+        df.insert(0, "True/Pred", categories)
+        df.set_index('True/Pred',inplace=True)
         return df
 
     @classmethod
