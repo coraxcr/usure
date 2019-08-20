@@ -10,9 +10,10 @@ class LabeledCommentsDao(ABC):
         """Return training, dev and test comments consolidated"""
         pass
 
-    def save(self, labeled_comments : LabeledComments):
-        pass
-        
     @abstractmethod
-    def get_chunks(self, name, *percentages) -> Iterable[LabeledComments]:
+    def save(self, labeled_comments:LabeledComments):
+        pass
+
+    @abstractmethod
+    def save_from_origin(self, labeled_comments : LabeledComments, origin_name):
         pass

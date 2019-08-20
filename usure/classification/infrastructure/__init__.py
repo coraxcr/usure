@@ -3,3 +3,4 @@ from .intertass_xml_parser import InterTassXMLParser
 from .basic_sentence_cleaner import BasicSentenceCleaner
 from .file_wordvectors_rep import FileWordVectorsRep
 from .file_model_dao import FileModelDao
+from .csv_labeled_comments_dao import CsvLabeledCommentsDao

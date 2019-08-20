@@ -16,20 +16,16 @@ class Vectorizer:
         self._w2v.wv.name = f"{corpus.name}.{self._typename}.kvs"
 
     @classmethod
-    def create_with_smallwindow(cls, corpus):
-        w2v = Vectorizer.create_word2vec(5)
-        return cls("sw", corpus, w2v)
-
-    @classmethod
-    def create_with_bigwindow(cls, corpus):
-        w2v = Vectorizer.create_word2vec(9)
-        return cls("bw", corpus, w2v)
+    def create_with_window(cls, corpus, max_skip_len):
+        w2v = Vectorizer.create_word2vec(max_skip_len)
+        return cls(f"{max_skip_len}_w", corpus, w2v)
 
     @staticmethod
     def create_word2vec(window: int):
         w2v = Word2Vec(
+            negative = 10,
             sg=1,
-            hs=1,
+            hs=0,
             size=300,
             min_count=3,
             workers=multiprocessing.cpu_count(),
@@ -57,4 +53,4 @@ class Vectorizer:
         self._w2v.train(
             sentences=self._corpus,
             total_examples=self.w2v.corpus_count,
-            epochs=15)
+            epochs=5)

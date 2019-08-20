@@ -14,22 +14,13 @@ class FileLabeledCommentsDao(LabeledCommentsDao):
         comments = self._get_from_xml(name)
         return comments
 
-    def save(self, labeled_comments : LabeledComments):
+    def save(self, labeled_comments:LabeledComments):
         raise NotImplementedError()
 
-    def get_chunks(self, name, *percentages) -> Iterable[LabeledComments]:
-        assert sum(percentages) == 100, "Arguments total must be 100%"
-        comments = self._get_from_xml(name)
-        chunk_sizes = list(map(lambda percentage: round(comments.count * percentage/100), percentages))
-        if comments.count > sum(chunk_sizes):
-            remainder =  comments.count - sum(chunk_sizes)
-            chunk_sizes[-1] += remainder
-        pivot = 0
-        chunks = []
-        for chunk_size in chunk_sizes:
-            chunks.append(LabeledComments(comments.name, comments.comments[pivot:pivot+chunk_size], comments.labels[pivot:pivot+chunk_size]))
-            pivot += chunk_size
-        return chunks 
+    def save_from_origin(self, labeled_comments : LabeledComments, origin_name):
+        parser = InterTassXMLParser(self._folderpath, origin_name, self._cleaner)
+        xml = parser.change_polarity_value(labeled_comments.labels)
+        parser.save(self._folderpath, labeled_comments.name, xml)
 
     def _get_from_xml(self, name):
         parser = InterTassXMLParser(self._folderpath, name, self._cleaner)

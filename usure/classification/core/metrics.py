@@ -41,7 +41,7 @@ class Metrics:
         self._confusion_matrix = self._format_confusion_matrix(confusion_matrix(y_true, y_pred), categories)
 
     def _format_confusion_matrix(self, confusion_matrix, categories):
-        df = pd.DataFrame(confusion_matrix)
+        df = pd.DataFrame(confusion_matrix.T)
         df.columns = categories
         df.insert(0, "Pred/True", categories)
         df.set_index('Pred/True',inplace=True)

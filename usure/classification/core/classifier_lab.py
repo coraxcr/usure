@@ -1,6 +1,6 @@
 import uuid
 from abc import ABC, abstractmethod
-from typing import Iterable, Any
+from typing import Iterable, Any, Tuple
 import statistics
 import pandas as pd
 from sklearn.model_selection import train_test_split, StratifiedKFold
@@ -91,7 +91,7 @@ class ClassifierLab:
         pass
 
     @abstractmethod
-    def test(self, model_name, test_input:ClassifierInput) -> Metrics:
+    def test(self, model_name, test_input:ClassifierInput) -> Tuple[Metrics, Iterable[str]]:
         pass
 
     @abstractmethod

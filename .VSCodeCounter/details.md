@@ -1,10 +1,10 @@
 # Details
 
-Date : 2019-08-06 22:39:02
+Date : 2019-08-11 16:56:55
 
 Directory /home/cris/Documents/repositories/usure/usure
 
-Total : 107 files,  38479 codes, 32 comments, 609 blanks, all 39120 lines
+Total : 111 files,  51170 codes, 44 comments, 632 blanks, all 51846 lines
 
 [summary](results.md)
 
@@ -15,37 +15,40 @@ Total : 107 files,  38479 codes, 32 comments, 609 blanks, all 39120 lines
 | [classification/__init__.py](file:///home/cris/Documents/repositories/usure/usure/classification/__init__.py) | Python | 0 | 0 | 1 | 1 |
 | [classification/app.py](file:///home/cris/Documents/repositories/usure/usure/classification/app.py) | Python | 27 | 4 | 7 | 38 |
 | [classification/core/__init__.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/__init__.py) | Python | 13 | 0 | 0 | 13 |
-| [classification/core/classifier_input.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/classifier_input.py) | Python | 48 | 1 | 10 | 59 |
+| [classification/core/classifier_input.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/classifier_input.py) | Python | 51 | 1 | 11 | 63 |
 | [classification/core/classifier_lab.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/classifier_lab.py) | Python | 85 | 1 | 26 | 112 |
-| [classification/core/cnn_lab.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/cnn_lab.py) | Python | 62 | 0 | 10 | 72 |
-| [classification/core/labeled_comments.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/labeled_comments.py) | Python | 19 | 0 | 9 | 28 |
-| [classification/core/labeled_comments_dao.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/labeled_comments_dao.py) | Python | 12 | 1 | 6 | 19 |
+| [classification/core/cnn_lab.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/cnn_lab.py) | Python | 63 | 1 | 9 | 73 |
+| [classification/core/labeled_comments.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/labeled_comments.py) | Python | 22 | 0 | 10 | 32 |
+| [classification/core/labeled_comments_dao.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/labeled_comments_dao.py) | Python | 13 | 1 | 5 | 19 |
 | [classification/core/metrics.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/metrics.py) | Python | 38 | 4 | 11 | 53 |
 | [classification/core/metrics_keras_callback.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/metrics_keras_callback.py) | Python | 39 | 0 | 7 | 46 |
 | [classification/core/model_dao.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/model_dao.py) | Python | 22 | 0 | 8 | 30 |
 | [classification/core/sentence_cleaner.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/sentence_cleaner.py) | Python | 5 | 0 | 4 | 9 |
-| [classification/core/svm_lab.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/svm_lab.py) | Python | 40 | 0 | 8 | 48 |
+| [classification/core/svm_lab.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/svm_lab.py) | Python | 41 | 0 | 8 | 49 |
 | [classification/core/wordvectors.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/wordvectors.py) | Python | 15 | 0 | 7 | 22 |
 | [classification/core/wordvectors_rep.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/wordvectors_rep.py) | Python | 8 | 0 | 5 | 13 |
 | [classification/core/wordvectors_service.py](file:///home/cris/Documents/repositories/usure/usure/classification/core/wordvectors_service.py) | Python | 34 | 0 | 12 | 46 |
-| [classification/infrastructure/__init__.py](file:///home/cris/Documents/repositories/usure/usure/classification/infrastructure/__init__.py) | Python | 5 | 0 | 0 | 5 |
+| [classification/infrastructure/__init__.py](file:///home/cris/Documents/repositories/usure/usure/classification/infrastructure/__init__.py) | Python | 6 | 0 | 0 | 6 |
 | [classification/infrastructure/basic_sentence_cleaner.py](file:///home/cris/Documents/repositories/usure/usure/classification/infrastructure/basic_sentence_cleaner.py) | Python | 9 | 0 | 5 | 14 |
-| [classification/infrastructure/file_labeled_comments_dao.py](file:///home/cris/Documents/repositories/usure/usure/classification/infrastructure/file_labeled_comments_dao.py) | Python | 29 | 0 | 7 | 36 |
+| [classification/infrastructure/csv_labeled_comments_dao.py](file:///home/cris/Documents/repositories/usure/usure/classification/infrastructure/csv_labeled_comments_dao.py) | Python | 40 | 0 | 5 | 45 |
+| [classification/infrastructure/file_labeled_comments_dao.py](file:///home/cris/Documents/repositories/usure/usure/classification/infrastructure/file_labeled_comments_dao.py) | Python | 20 | 0 | 7 | 27 |
 | [classification/infrastructure/file_model_dao.py](file:///home/cris/Documents/repositories/usure/usure/classification/infrastructure/file_model_dao.py) | Python | 36 | 0 | 9 | 45 |
 | [classification/infrastructure/file_wordvectors_rep.py](file:///home/cris/Documents/repositories/usure/usure/classification/infrastructure/file_wordvectors_rep.py) | Python | 20 | 0 | 7 | 27 |
-| [classification/infrastructure/intertass_xml_parser.py](file:///home/cris/Documents/repositories/usure/usure/classification/infrastructure/intertass_xml_parser.py) | Python | 18 | 0 | 4 | 22 |
+| [classification/infrastructure/intertass_xml_parser.py](file:///home/cris/Documents/repositories/usure/usure/classification/infrastructure/intertass_xml_parser.py) | Python | 27 | 0 | 7 | 34 |
 | [classification/infrastructure/tests/__init__.py](file:///home/cris/Documents/repositories/usure/usure/classification/infrastructure/tests/__init__.py) | Python | 0 | 0 | 1 | 1 |
-| [classification/infrastructure/tests/test_file_labeled_comments_dao.py](file:///home/cris/Documents/repositories/usure/usure/classification/infrastructure/tests/test_file_labeled_comments_dao.py) | Python | 20 | 7 | 7 | 34 |
-| [classification/ui/CNN Training & Validation Report.ipynb](file:///home/cris/Documents/repositories/usure/usure/classification/ui/CNN%20Training%20%26%20Validation%20Report.ipynb) | jupyter | 13,323 | 0 | 1 | 13,324 |
-| [classification/ui/SVM Training & Validation Report.ipynb](file:///home/cris/Documents/repositories/usure/usure/classification/ui/SVM%20Training%20%26%20Validation%20Report.ipynb) | jupyter | 12,723 | 0 | 1 | 12,724 |
+| [classification/infrastructure/tests/test_file_labeled_comments_dao.py](file:///home/cris/Documents/repositories/usure/usure/classification/infrastructure/tests/test_file_labeled_comments_dao.py) | Python | 11 | 7 | 5 | 23 |
+| [classification/intertass_predi.py](file:///home/cris/Documents/repositories/usure/usure/classification/intertass_predi.py) | Python | 76 | 11 | 14 | 101 |
+| [classification/ui/CNN Training & Validation Report.ipynb](file:///home/cris/Documents/repositories/usure/usure/classification/ui/CNN%20Training%20%26%20Validation%20Report.ipynb) | jupyter | 18,829 | 0 | 1 | 18,830 |
+| [classification/ui/Data sets.ipynb](file:///home/cris/Documents/repositories/usure/usure/classification/ui/Data%20sets.ipynb) | jupyter | 1,106 | 0 | 1 | 1,107 |
+| [classification/ui/SVM Training & Validation Report.ipynb](file:///home/cris/Documents/repositories/usure/usure/classification/ui/SVM%20Training%20%26%20Validation%20Report.ipynb) | jupyter | 18,237 | 0 | 1 | 18,238 |
 | [classification/ui/__init__.py](file:///home/cris/Documents/repositories/usure/usure/classification/ui/__init__.py) | Python | 0 | 0 | 1 | 1 |
 | [classification/ui/utils.py](file:///home/cris/Documents/repositories/usure/usure/classification/ui/utils.py) | Python | 39 | 1 | 5 | 45 |
 | [common/__init__.py](file:///home/cris/Documents/repositories/usure/usure/common/__init__.py) | Python | 0 | 0 | 1 | 1 |
 | [common/fileutils.py](file:///home/cris/Documents/repositories/usure/usure/common/fileutils.py) | Python | 38 | 0 | 11 | 49 |
 | [common/logging.py](file:///home/cris/Documents/repositories/usure/usure/common/logging.py) | Python | 41 | 0 | 17 | 58 |
-| [config.py](file:///home/cris/Documents/repositories/usure/usure/config.py) | Python | 24 | 6 | 26 | 56 |
-| [config.test.yml](file:///home/cris/Documents/repositories/usure/usure/config.test.yml) | YAML | 9 | 0 | 0 | 9 |
-| [config.yml](file:///home/cris/Documents/repositories/usure/usure/config.yml) | YAML | 9 | 0 | 0 | 9 |
+| [config.py](file:///home/cris/Documents/repositories/usure/usure/config.py) | Python | 25 | 6 | 27 | 58 |
+| [config.test.yml](file:///home/cris/Documents/repositories/usure/usure/config.test.yml) | YAML | 10 | 0 | 0 | 10 |
+| [config.yml](file:///home/cris/Documents/repositories/usure/usure/config.yml) | YAML | 10 | 0 | 0 | 10 |
 | [data_test/classification/test_0.xml](file:///home/cris/Documents/repositories/usure/usure/data_test/classification/test_0.xml) | XML | 33 | 0 | 1 | 34 |
 | [data_test/classification/test_1.xml](file:///home/cris/Documents/repositories/usure/usure/data_test/classification/test_1.xml) | XML | 203 | 0 | 1 | 204 |
 | [preprocessing/__init__.py](file:///home/cris/Documents/repositories/usure/usure/preprocessing/__init__.py) | Python | 0 | 0 | 1 | 1 |
@@ -99,7 +102,8 @@ Total : 107 files,  38479 codes, 32 comments, 609 blanks, all 39120 lines
 | [preprocessing/infrastructure/tests/test_emoticonrep.py](file:///home/cris/Documents/repositories/usure/usure/preprocessing/infrastructure/tests/test_emoticonrep.py) | Python | 11 | 0 | 7 | 18 |
 | [preprocessing/infrastructure/tests/test_file_corpus_rep.py](file:///home/cris/Documents/repositories/usure/usure/preprocessing/infrastructure/tests/test_file_corpus_rep.py) | Python | 25 | 0 | 13 | 38 |
 | [preprocessing/ui/__init__.py](file:///home/cris/Documents/repositories/usure/usure/preprocessing/ui/__init__.py) | Python | 0 | 0 | 1 | 1 |
-| [preprocessing/ui/preprocessing.ipynb](file:///home/cris/Documents/repositories/usure/usure/preprocessing/ui/preprocessing.ipynb) | jupyter | 140 | 0 | 1 | 141 |
+| [preprocessing/ui/preprocessed corpus analisis.ipynb](file:///home/cris/Documents/repositories/usure/usure/preprocessing/ui/preprocessed%20corpus%20analisis.ipynb) | jupyter | 457 | 0 | 1 | 458 |
+| [preprocessing/ui/preprocessing.ipynb](file:///home/cris/Documents/repositories/usure/usure/preprocessing/ui/preprocessing.ipynb) | jupyter | 128 | 0 | 1 | 129 |
 | [wordvectors/__initi__.py](file:///home/cris/Documents/repositories/usure/usure/wordvectors/__initi__.py) | Python | 0 | 0 | 1 | 1 |
 | [wordvectors/app.py](file:///home/cris/Documents/repositories/usure/usure/wordvectors/app.py) | Python | 11 | 0 | 9 | 20 |
 | [wordvectors/core/__init__.py](file:///home/cris/Documents/repositories/usure/usure/wordvectors/core/__init__.py) | Python | 5 | 0 | 0 | 5 |

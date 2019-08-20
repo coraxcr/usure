@@ -1,7 +1,8 @@
-from typing import Iterable, Any
+from typing import Iterable, Any, Tuple
 import os
 import numpy as np
 from sklearn import svm
+from sklearn.model_selection import GridSearchCV
 from .classifier_input import ClassifierInput
 from .classifier_lab import ClassifierLab, LabReport, ModelReport, ModelDao
 from .metrics import Metrics
@@ -27,20 +28,31 @@ class SvmLab(ClassifierLab):
         return labreport
 
     def create_model(self):
-        model = svm.SVC(kernel='rbf', gamma=0.4, C = 0.7, degree = 2, decision_function_shape='ova', probability=True)
+        model = svm.SVC(kernel='rbf', gamma=0.178, C = 8, degree = 2, decision_function_shape='ova', probability=True)
         return model
 
-    def test(self, model_name, test_input:ClassifierInput) -> Metrics:
+    def test(self, model_name, test_input:ClassifierInput) -> Tuple[Metrics, Iterable[str]]:
         model = self._dao.get_sklearn(model_name)
         y_pred_sparsed, y_pred = self._predict(test_input.x_vectorized_mean, model)
         metrics = Metrics.create(test_input.y_indexes, y_pred_sparsed, y_pred, test_input.categories)
-        return metrics
+        labeled_predictions = np.array([test_input.categories[index] for index in y_pred_sparsed], dtype=object)
+        return metrics, labeled_predictions
 
     def predict(self, model_name, input:ClassifierInput) -> Iterable[str]:
         model = self._dao.get_sklearn(model_name)
-        y_pred_sparsed, y_pred = _predict(input.x_vectorized_mean, model)
+        y_pred_sparsed, y_pred = self._predict(input.x_vectorized_mean, model)
         labeled_predictions = np.array([input.categories[index] for index in y_pred_sparsed], dtype=object)
         return labeled_predictions
+
+    def optimization(self, input:ClassifierInput):
+        degrees = [2]
+        Cs = [8, 10, 12]
+        gammas = np.arange(0.09, 0.2, 0.001)
+        param_grid = {'C': Cs, 'gamma' : gammas, "degree": degrees}
+        grid_search = GridSearchCV(svm.SVC(kernel='rbf'), param_grid, cv=10, verbose=1, n_jobs=7, return_train_score=True)
+        grid_search.fit(input.x_vectorized_mean, input.y_indexes)
+        grid_search.best_params_
+        return grid_search.best_params_
     
     def _predict(self, x, model:svm.SVC):
         y_pred =  model.predict_proba(x)

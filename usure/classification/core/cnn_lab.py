@@ -2,7 +2,7 @@ import keras
 from keras.layers import Conv1D, GlobalMaxPooling1D, Input, Dense, concatenate, Activation, Dropout
 from keras.models import Model, Sequential
 import numpy as np
-from typing import Iterable, Any
+from typing import Iterable, Any, Tuple
 from .classifier_input import ClassifierInput
 from .model_dao import ModelDao
 from .metrics import Metrics
@@ -21,7 +21,6 @@ class CnnLab(ClassifierLab):
             model = self.create_model()   
             modelname = self.get_an_id()
             metrics_callback = MetricsKerasCallback.create(modelname, x_train, y_train, x_val, y_val, input.categories, labreport)
-            
             model.fit(x_train, 
                     y_train, 
                     batch_size=32,
@@ -30,7 +29,6 @@ class CnnLab(ClassifierLab):
                     callbacks=[metrics_callback], 
                     shuffle=False,
                     verbose=False)
-
             self._dao.save_keras(modelname, model)
         return labreport
 
@@ -56,16 +54,18 @@ class CnnLab(ClassifierLab):
         )
         return model
 
-    def test(self, model_name:str, test_input:ClassifierInput) -> Metrics:
+    def test(self, model_name:str, test_input:ClassifierInput) -> Tuple[Metrics, Iterable[str]]:
         model = self._dao.get_keras(model_name)
+        #model.summary()
         y_pred = model.predict(test_input.x_vectorized)
         y_pred_sparsed = np.argmax(y_pred, axis=1)
         metrics = Metrics.create(test_input.y_indexes, y_pred_sparsed, y_pred, test_input.categories)
-        return metrics
+        labeled_predictions = np.array([test_input.categories[index] for index in y_pred_sparsed], dtype=object)
+        return metrics, labeled_predictions
 
     def predict(self, model_name, input:ClassifierInput) -> Iterable[str]:
         model = self._dao.get_keras(model_name)
-        y_pred = model.predict(input.x_tokenized)
+        y_pred = model.predict(input.x_vectorized)
         y_pred_sparsed = np.argmax(y_pred, axis=1)
         labeled_predictions = np.array([input.categories[index] for index in y_pred_sparsed], dtype=object)
         return labeled_predictions

@@ -12,9 +12,9 @@ class ClassifierInput:
         self._labeled_comments = labeled_comments
         self._wv_service = wv_service
         self._categories = categories
-        self._x_vectorized = None
-        self._x_mean = None
-        self._y_indexes = None
+        self._x_vectorized = np.array([])
+        self._y_indexes = np.array([])
+        self._x_vectorized_mean = np.array([])
 
     @property
     def embeddings_name(self):
@@ -28,6 +28,10 @@ class ClassifierInput:
     def vector_size(self):
         return self._wv_service.vector_size
 
+    @property
+    def labeled_comments(self):
+        return self._labeled_comments
+
     @property 
     def categories(self):
         if not any(self._categories):
@@ -38,7 +42,7 @@ class ClassifierInput:
 
     @property
     def x_vectorized(self):
-        if not self._x_vectorized:
+        if not self._x_vectorized.any():
             no_texts = len(self._labeled_comments.comments)
             padded_texts = self._wv_service.texts_to_padded_vectors(self.comment_max_length,
                 self._labeled_comments.comments)
@@ -47,13 +51,13 @@ class ClassifierInput:
     
     @property 
     def x_vectorized_mean(self):
-        if not self._x_mean:
-            self._x_vectorized_mean = [np.mean(np.array(comment, dtype=float), axis=0) for comment in self.x_vectorized]
+        if not self._x_vectorized_mean.any():
+            self._x_vectorized_mean = np.array([np.mean(np.array(comment, dtype=float), axis=0) for comment in self.x_vectorized])
         return np.array(self._x_vectorized_mean)
     
     @property 
     def y_indexes(self):
-        if not self._y_indexes:
+        if not self._y_indexes.any():
             label_encoder = LabelEncoder()
             self._y_indexes = label_encoder.fit_transform(self._labeled_comments.labels)
         return np.array(self._y_indexes, dtype=int)

@@ -4,6 +4,7 @@ persistence:
       preprocessed: data/preprocessed
       embeddings: data/embeddings
       classification: data/classification
+      sets: data/classification/sets
       models: data/classification/models
       logs: data/logs
       assets:  data/assets

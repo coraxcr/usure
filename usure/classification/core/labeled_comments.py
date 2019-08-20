@@ -20,6 +20,10 @@ class LabeledComments:
     def labels(self):
         return self._labels
 
+    @labels.setter
+    def label(self, labels):
+        self._labels = labels
+
     @property
     def count(self):
         return len(self._comments)
