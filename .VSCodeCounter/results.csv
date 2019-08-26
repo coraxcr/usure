@@ -1,18 +1,18 @@
 filename, language, Python, YAML, XML, jupyter, comment, blank, total
 __init__.py, Python, 0, 0, 0, 0, 0, 1, 1
 classification/__init__.py, Python, 0, 0, 0, 0, 0, 1, 1
-classification/app.py, Python, 27, 0, 0, 0, 4, 7, 38
+classification/app.py, Python, 28, 0, 0, 0, 6, 5, 39
 classification/core/__init__.py, Python, 13, 0, 0, 0, 0, 0, 13
 classification/core/classifier_input.py, Python, 51, 0, 0, 0, 1, 11, 63
 classification/core/classifier_lab.py, Python, 85, 0, 0, 0, 1, 26, 112
-classification/core/cnn_lab.py, Python, 63, 0, 0, 0, 1, 9, 73
+classification/core/cnn_lab.py, Python, 63, 0, 0, 0, 1, 8, 72
 classification/core/labeled_comments.py, Python, 22, 0, 0, 0, 0, 10, 32
 classification/core/labeled_comments_dao.py, Python, 13, 0, 0, 0, 1, 5, 19
 classification/core/metrics.py, Python, 38, 0, 0, 0, 4, 11, 53
 classification/core/metrics_keras_callback.py, Python, 39, 0, 0, 0, 0, 7, 46
 classification/core/model_dao.py, Python, 22, 0, 0, 0, 0, 8, 30
 classification/core/sentence_cleaner.py, Python, 5, 0, 0, 0, 0, 4, 9
-classification/core/svm_lab.py, Python, 41, 0, 0, 0, 0, 8, 49
+classification/core/svm_lab.py, Python, 51, 0, 0, 0, 0, 9, 60
 classification/core/wordvectors.py, Python, 15, 0, 0, 0, 0, 7, 22
 classification/core/wordvectors_rep.py, Python, 8, 0, 0, 0, 0, 5, 13
 classification/core/wordvectors_service.py, Python, 34, 0, 0, 0, 0, 12, 46
@@ -26,9 +26,9 @@ classification/infrastructure/intertass_xml_parser.py, Python, 27, 0, 0, 0, 0, 7
 classification/infrastructure/tests/__init__.py, Python, 0, 0, 0, 0, 0, 1, 1
 classification/infrastructure/tests/test_file_labeled_comments_dao.py, Python, 11, 0, 0, 0, 7, 5, 23
 classification/intertass_predi.py, Python, 76, 0, 0, 0, 11, 14, 101
-classification/ui/CNN Training & Validation Report.ipynb, jupyter, 0, 0, 0, 18829, 0, 1, 18830
-classification/ui/Data sets.ipynb, jupyter, 0, 0, 0, 1106, 0, 1, 1107
-classification/ui/SVM Training & Validation Report.ipynb, jupyter, 0, 0, 0, 18237, 0, 1, 18238
+classification/ui/CNN Training & Validation Report.ipynb, jupyter, 0, 0, 0, 2780, 0, 1, 2781
+classification/ui/Data sets.ipynb, jupyter, 0, 0, 0, 1249, 0, 1, 1250
+classification/ui/SVM Training & Validation Report.ipynb, jupyter, 0, 0, 0, 2562, 0, 1, 2563
 classification/ui/__init__.py, Python, 0, 0, 0, 0, 0, 1, 1
 classification/ui/utils.py, Python, 39, 0, 0, 0, 1, 5, 45
 common/__init__.py, Python, 0, 0, 0, 0, 0, 1, 1
@@ -90,16 +90,16 @@ preprocessing/infrastructure/tests/stopswordsrep_stub.py, Python, 8, 0, 0, 0, 0,
 preprocessing/infrastructure/tests/test_emoticonrep.py, Python, 11, 0, 0, 0, 0, 7, 18
 preprocessing/infrastructure/tests/test_file_corpus_rep.py, Python, 25, 0, 0, 0, 0, 13, 38
 preprocessing/ui/__init__.py, Python, 0, 0, 0, 0, 0, 1, 1
-preprocessing/ui/preprocessed corpus analisis.ipynb, jupyter, 0, 0, 0, 457, 0, 1, 458
+preprocessing/ui/preprocessed corpus analysis.ipynb, jupyter, 0, 0, 0, 462, 0, 1, 463
 preprocessing/ui/preprocessing.ipynb, jupyter, 0, 0, 0, 128, 0, 1, 129
 wordvectors/__initi__.py, Python, 0, 0, 0, 0, 0, 1, 1
 wordvectors/app.py, Python, 11, 0, 0, 0, 0, 9, 20
 wordvectors/core/__init__.py, Python, 5, 0, 0, 0, 0, 0, 5
 wordvectors/core/corpus.py, Python, 10, 0, 0, 0, 0, 6, 16
 wordvectors/core/corpus_rep.py, Python, 10, 0, 0, 0, 0, 5, 15
-wordvectors/core/embeddingsmachine.py, Python, 24, 0, 0, 0, 0, 22, 46
+wordvectors/core/embeddingsmachine.py, Python, 33, 0, 0, 0, 0, 21, 54
 wordvectors/core/keyedvectors_rep.py, Python, 13, 0, 0, 0, 0, 6, 19
-wordvectors/core/vectorizer.py, Python, 47, 0, 0, 0, 0, 14, 61
+wordvectors/core/vectorizer.py, Python, 44, 0, 0, 0, 0, 13, 57
 wordvectors/core/word2vec_rep.py, Python, 13, 0, 0, 0, 0, 6, 19
 wordvectors/infrastructure/__init__.py, Python, 3, 0, 0, 0, 0, 0, 3
 wordvectors/infrastructure/file_corpus_rep.py, Python, 19, 0, 0, 0, 0, 10, 29
@@ -110,4 +110,4 @@ wordvectors/ui/statisticsreporter.py, Python, 95, 0, 0, 0, 1, 13, 109
 wordvectors/ui/vectorization-facebook.ipynb, jupyter, 0, 0, 0, 3439, 0, 1, 3440
 wordvectors/ui/vectorization-spanish_billion_word.ipynb, jupyter, 0, 0, 0, 3427, 0, 1, 3428
 wordvectors/ui/vectorization-twitter.ipynb, jupyter, 0, 0, 0, 3426, 0, 1, 3427
-Total, -, 1865, 20, 236, 49049, 44, 632, 51846
+Total, -, 1882, 20, 236, 17473, 46, 628, 20285

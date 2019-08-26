@@ -1,13 +1,13 @@
-Date : 2019-08-11 16:56:55
+Date : 2019-08-21 16:15:09
 Directory : /home/cris/Documents/repositories/usure/usure
-Total : 111 files,  51170 codes, 44 comments, 632 blanks, all 51846 lines
+Total : 111 files,  19611 codes, 46 comments, 628 blanks, all 20285 lines
 
 Languages
 +----------+------------+------------+------------+------------+------------+
 | language | files      | code       | comment    | blank      | total      |
 +----------+------------+------------+------------+------------+------------+
-| jupyter  |          8 |     49,049 |          0 |          8 |     49,057 |
-| Python   |         99 |      1,865 |         44 |        622 |      2,531 |
+| jupyter  |          8 |     17,473 |          0 |          8 |     17,481 |
+| Python   |         99 |      1,882 |         46 |        618 |      2,546 |
 | XML      |          2 |        236 |          0 |          2 |        238 |
 | YAML     |          2 |         20 |          0 |          0 |         20 |
 +----------+------------+------------+------------+------------+------------+
@@ -16,20 +16,20 @@ Directories
 +-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
 | path                                                                  | files      | code       | comment    | blank      | total      |
 +-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
-| .                                                                     |        111 |     51,170 |         44 |        632 |     51,846 |
-| classification                                                        |         31 |     38,932 |         31 |        200 |     39,163 |
-| classification/ui                                                     |          5 |     38,211 |          1 |          9 |     38,221 |
-| wordvectors                                                           |         18 |     10,590 |          1 |        112 |     10,703 |
+| .                                                                     |        111 |     19,611 |         46 |        628 |     20,285 |
+| wordvectors                                                           |         18 |     10,596 |          1 |        110 |     10,707 |
 | wordvectors/ui                                                        |          5 |     10,388 |          1 |         16 |     10,405 |
-| preprocessing                                                         |         53 |      1,288 |          6 |        261 |      1,555 |
-| preprocessing/ui                                                      |          3 |        585 |          0 |          3 |        588 |
+| classification                                                        |         31 |      7,362 |         33 |        198 |      7,593 |
+| classification/ui                                                     |          5 |      6,630 |          1 |          9 |      6,640 |
+| preprocessing                                                         |         53 |      1,293 |          6 |        261 |      1,560 |
+| preprocessing/ui                                                      |          3 |        590 |          0 |          3 |        593 |
 | preprocessing/cleaning                                                |         36 |        493 |          5 |        172 |        670 |
-| classification/core                                                   |         14 |        449 |          8 |        123 |        580 |
+| classification/core                                                   |         14 |        459 |          8 |        123 |        590 |
 | data_test/classification                                              |          2 |        236 |          0 |          2 |        238 |
 | data_test                                                             |          2 |        236 |          0 |          2 |        238 |
 | preprocessing/cleaning/tests                                          |         17 |        189 |          1 |         65 |        255 |
 | classification/infrastructure                                         |          9 |        169 |          7 |         46 |        222 |
-| wordvectors/core                                                      |          7 |        122 |          0 |         59 |        181 |
+| wordvectors/core                                                      |          7 |        128 |          0 |         57 |        185 |
 | preprocessing/infrastructure                                          |          9 |        109 |          1 |         48 |        158 |
 | common                                                                |          3 |         79 |          0 |         29 |        108 |
 | wordvectors/infrastructure                                            |          4 |         69 |          0 |         27 |         96 |
@@ -44,18 +44,18 @@ Files
 +-----------------------------------------------------------------------+----------+------------+------------+------------+------------+
 | __init__.py                                                           | Python   |          0 |          0 |          1 |          1 |
 | classification/__init__.py                                            | Python   |          0 |          0 |          1 |          1 |
-| classification/app.py                                                 | Python   |         27 |          4 |          7 |         38 |
+| classification/app.py                                                 | Python   |         28 |          6 |          5 |         39 |
 | classification/core/__init__.py                                       | Python   |         13 |          0 |          0 |         13 |
 | classification/core/classifier_input.py                               | Python   |         51 |          1 |         11 |         63 |
 | classification/core/classifier_lab.py                                 | Python   |         85 |          1 |         26 |        112 |
-| classification/core/cnn_lab.py                                        | Python   |         63 |          1 |          9 |         73 |
+| classification/core/cnn_lab.py                                        | Python   |         63 |          1 |          8 |         72 |
 | classification/core/labeled_comments.py                               | Python   |         22 |          0 |         10 |         32 |
 | classification/core/labeled_comments_dao.py                           | Python   |         13 |          1 |          5 |         19 |
 | classification/core/metrics.py                                        | Python   |         38 |          4 |         11 |         53 |
 | classification/core/metrics_keras_callback.py                         | Python   |         39 |          0 |          7 |         46 |
 | classification/core/model_dao.py                                      | Python   |         22 |          0 |          8 |         30 |
 | classification/core/sentence_cleaner.py                               | Python   |          5 |          0 |          4 |          9 |
-| classification/core/svm_lab.py                                        | Python   |         41 |          0 |          8 |         49 |
+| classification/core/svm_lab.py                                        | Python   |         51 |          0 |          9 |         60 |
 | classification/core/wordvectors.py                                    | Python   |         15 |          0 |          7 |         22 |
 | classification/core/wordvectors_rep.py                                | Python   |          8 |          0 |          5 |         13 |
 | classification/core/wordvectors_service.py                            | Python   |         34 |          0 |         12 |         46 |
@@ -69,9 +69,9 @@ Files
 | classification/infrastructure/tests/__init__.py                       | Python   |          0 |          0 |          1 |          1 |
 | classification/infrastructure/tests/test_file_labeled_comments_dao.py | Python   |         11 |          7 |          5 |         23 |
 | classification/intertass_predi.py                                     | Python   |         76 |         11 |         14 |        101 |
-| classification/ui/CNN Training & Validation Report.ipynb              | jupyter  |     18,829 |          0 |          1 |     18,830 |
-| classification/ui/Data sets.ipynb                                     | jupyter  |      1,106 |          0 |          1 |      1,107 |
-| classification/ui/SVM Training & Validation Report.ipynb              | jupyter  |     18,237 |          0 |          1 |     18,238 |
+| classification/ui/CNN Training & Validation Report.ipynb              | jupyter  |      2,780 |          0 |          1 |      2,781 |
+| classification/ui/Data sets.ipynb                                     | jupyter  |      1,249 |          0 |          1 |      1,250 |
+| classification/ui/SVM Training & Validation Report.ipynb              | jupyter  |      2,562 |          0 |          1 |      2,563 |
 | classification/ui/__init__.py                                         | Python   |          0 |          0 |          1 |          1 |
 | classification/ui/utils.py                                            | Python   |         39 |          1 |          5 |         45 |
 | common/__init__.py                                                    | Python   |          0 |          0 |          1 |          1 |
@@ -133,16 +133,16 @@ Files
 | preprocessing/infrastructure/tests/test_emoticonrep.py                | Python   |         11 |          0 |          7 |         18 |
 | preprocessing/infrastructure/tests/test_file_corpus_rep.py            | Python   |         25 |          0 |         13 |         38 |
 | preprocessing/ui/__init__.py                                          | Python   |          0 |          0 |          1 |          1 |
-| preprocessing/ui/preprocessed corpus analisis.ipynb                   | jupyter  |        457 |          0 |          1 |        458 |
+| preprocessing/ui/preprocessed corpus analysis.ipynb                   | jupyter  |        462 |          0 |          1 |        463 |
 | preprocessing/ui/preprocessing.ipynb                                  | jupyter  |        128 |          0 |          1 |        129 |
 | wordvectors/__initi__.py                                              | Python   |          0 |          0 |          1 |          1 |
 | wordvectors/app.py                                                    | Python   |         11 |          0 |          9 |         20 |
 | wordvectors/core/__init__.py                                          | Python   |          5 |          0 |          0 |          5 |
 | wordvectors/core/corpus.py                                            | Python   |         10 |          0 |          6 |         16 |
 | wordvectors/core/corpus_rep.py                                        | Python   |         10 |          0 |          5 |         15 |
-| wordvectors/core/embeddingsmachine.py                                 | Python   |         24 |          0 |         22 |         46 |
+| wordvectors/core/embeddingsmachine.py                                 | Python   |         33 |          0 |         21 |         54 |
 | wordvectors/core/keyedvectors_rep.py                                  | Python   |         13 |          0 |          6 |         19 |
-| wordvectors/core/vectorizer.py                                        | Python   |         47 |          0 |         14 |         61 |
+| wordvectors/core/vectorizer.py                                        | Python   |         44 |          0 |         13 |         57 |
 | wordvectors/core/word2vec_rep.py                                      | Python   |         13 |          0 |          6 |         19 |
 | wordvectors/infrastructure/__init__.py                                | Python   |          3 |          0 |          0 |          3 |
 | wordvectors/infrastructure/file_corpus_rep.py                         | Python   |         19 |          0 |         10 |         29 |
@@ -153,5 +153,5 @@ Files
 | wordvectors/ui/vectorization-facebook.ipynb                           | jupyter  |      3,439 |          0 |          1 |      3,440 |
 | wordvectors/ui/vectorization-spanish_billion_word.ipynb               | jupyter  |      3,427 |          0 |          1 |      3,428 |
 | wordvectors/ui/vectorization-twitter.ipynb                            | jupyter  |      3,426 |          0 |          1 |      3,427 |
-| Total                                                                 |          |     51,170 |         44 |        632 |     51,846 |
+| Total                                                                 |          |     19,611 |         46 |        628 |     20,285 |
 +-----------------------------------------------------------------------+----------+------------+------------+------------+------------+
