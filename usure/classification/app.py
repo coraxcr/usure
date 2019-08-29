@@ -19,19 +19,19 @@ class App:
     
     def do(self):
         labeledcomments = self._commentsdao.get("train.csv") #intertass-CR-test
-        wv = self._wvrep.get("CorpusFBCR2013.txt.usu.sw.kvs")
+        wv = self._wvrep.get("SBW-vectors-300-min5.bin")
         wv_service = WordVectorsService(wv)
         input = ClassifierInput(labeledcomments, wv_service)
         model_dao = FileModelDao(config.models)
-        lab = SvmLab(model_dao)
-        #labreport = lab.train_by_stratifiedkfold(input)
-        #print(labreport.summary.to_string())
-        #df = ui.model_reports_to_DataFrame(labreport.model_reports)
-        #print(df.to_string())
+        lab = CnnLab(model_dao)
+        labreport = lab.train_by_stratifiedkfold(input)
+        print(labreport.summary.to_string())
+        df = ui.model_reports_to_DataFrame(labreport.model_reports)
+        print(df.to_string())
         #metrics = lab.test("0a437e7ad5194d0788dd2123af7e1f31", input)
         #print(metrics.accuracy)
-        result = lab.optimization(input)
-        print(result)
+        #result = lab.optimization(input)
+        #print(result)
 
 if __name__ == "__main__":
     usurelogging.config(config.logs, "classification.log")

@@ -37,7 +37,6 @@ class WordVectorsService:
         return np.array(text.split(), dtype=object)
 
     def _get_vector(self, token):
-        not_found_counter = 0 
         if token not in self._wv.wordvectors:
             logging.info(f"Token \"{token}\" not found in {self._wv.name}.")
             return np.zeros((1, self._wv.vector_size), dtype=float)

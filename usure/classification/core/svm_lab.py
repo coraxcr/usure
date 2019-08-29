@@ -28,7 +28,7 @@ class SvmLab(ClassifierLab):
         return labreport
 
     def create_model(self):
-        model = svm.SVC(kernel='rbf', gamma=0.178, C = 8, degree = 2, decision_function_shape='ova', probability=True)
+        model = svm.SVC(kernel='rbf', gamma=0.178, C = 8, decision_function_shape='ova', probability=True)
         return model
 
     def test(self, model_name, test_input:ClassifierInput) -> Tuple[Metrics, Iterable[str]]:

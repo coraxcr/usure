@@ -15,17 +15,8 @@ class EmbeddingsMachine:
 
         self._vectorizers = [
 
-            lambda corpus: Vectorizer.create_with_window(corpus, 1),
             lambda corpus: Vectorizer.create_with_window(corpus, 2),
-            lambda corpus: Vectorizer.create_with_window(corpus, 4),
-            lambda corpus: Vectorizer.create_with_window(corpus, 6),
-            lambda corpus: Vectorizer.create_with_window(corpus, 8),
-            lambda corpus: Vectorizer.create_with_window(corpus, 10),
-            lambda corpus: Vectorizer.create_with_window(corpus, 12),
-            lambda corpus: Vectorizer.create_with_window(corpus, 14),
-            lambda corpus: Vectorizer.create_with_window(corpus, 16),
-            lambda corpus: Vectorizer.create_with_window(corpus, 18),
-            lambda corpus: Vectorizer.create_with_window(corpus, 20),
+            lambda corpus: Vectorizer.create_with_window(corpus, 5)
         ]
 
     def init_work(self):

@@ -23,7 +23,7 @@ class CnnLab(ClassifierLab):
             metrics_callback = MetricsKerasCallback.create(modelname, x_train, y_train, x_val, y_val, input.categories, labreport)
             model.fit(x_train, 
                     y_train, 
-                    batch_size=32,
+                    batch_size=50,
                     epochs=5,
                     validation_data=(x_val, y_val), 
                     callbacks=[metrics_callback], 
@@ -36,15 +36,15 @@ class CnnLab(ClassifierLab):
         comment_max_length = 20
         vector_size = 300
         input_comments = Input(shape=(comment_max_length, vector_size), dtype='float')
-        bigram_branch = Conv1D(filters=100, kernel_size=2, padding='valid', activation='relu', strides=1)(input_comments)
+        bigram_branch = Conv1D(filters=100, kernel_size=3, padding='valid', activation='relu', strides=1)(input_comments)
         bigram_branch = GlobalMaxPooling1D()(bigram_branch)
-        trigram_branch = Conv1D(filters=100, kernel_size=3, padding='valid', activation='relu', strides=1)(input_comments)
+        trigram_branch = Conv1D(filters=100, kernel_size=4, padding='valid', activation='relu', strides=1)(input_comments)
         trigram_branch = GlobalMaxPooling1D()(trigram_branch)
-        fourgram_branch = Conv1D(filters=100, kernel_size=4, padding='valid', activation='relu', strides=1)(input_comments)
+        fourgram_branch = Conv1D(filters=100, kernel_size=5, padding='valid', activation='relu', strides=1)(input_comments)
         fourgram_branch = GlobalMaxPooling1D()(fourgram_branch)
         merged = concatenate([bigram_branch, trigram_branch, fourgram_branch], axis=1)
         merged = Dense(256, activation='relu')(merged)
-        merged = Dropout(0.45)(merged)
+        merged = Dropout(0.5)(merged)
         merged = Dense(4)(merged)
         output = Activation('softmax')(merged)
         model = Model(inputs=[input_comments], outputs=[output])        
