@@ -18,10 +18,10 @@ class FileCorpusRep(CorpusRep):
 
     def get_all(self) -> Iterable[Corpus]:
         files = fileutils.read_files(
-            self.folder_path, [".txt", ".usu", ".xml"], "utf_8")
+            self.folder_path, [".usu"], "utf_8")
         for name, get_corpus in files:
             yield Corpus(name, get_corpus)
 
     def save(self, corpus: Corpus):
         fullpath = path.join(self.folder_path, corpus.name)
-        fileutils.save_file(fullpath, "ascii", corpus.__iter__())
+        fileutils.save_file(fullpath, "utf_8", corpus.__iter__())
